@@ -222,7 +222,7 @@
           Size: ${formatSize(data[index].sz)}<br>
         `;
             $metrics.style.display = 'block';
-            $metrics.style.top = x.clientY - x.offsetY - 44 + 'px';
+            $metrics.style.top = x.pageY - x.offsetY - 44 + 'px';
             if (x.clientX + 152 > window.innerWidth) {
               $metrics.style.left = x.clientX - 152 + 'px';
             } else {

@@ -6,6 +6,8 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   const connectionString = process.env.MONGODB_CONNECTION_STRING;
+  // TODO: If no connection string, we might be running in a PR environment
+  // should probably load dummy data from JSON or something
   if (!connectionString || connectionString === '') {
     throw new Error('MONGODB_CONNECTION_STRING not defined');
   }
@@ -15,13 +17,16 @@ const httpTrigger: AzureFunction = async function (
   const metricsData = [];
 
   try {
+    // TODO: Get DB name from env so we can run separate staging DB
     const database = client.db('tpsw');
     const scriptsCollection = database.collection('scripts');
     const metricsCollection = database.collection('script-metrics');
 
+    // TODO: Optionally filter by ID passed in query param
     const scripts = await scriptsCollection.find().toArray();
 
     const scriptMetricsLimit = new Date();
+    // TODO: Get days from env, possibly query param?
     scriptMetricsLimit.setDate(scriptMetricsLimit.getDate() - 30);
     const scriptMetricsPast30Days = await metricsCollection
       .find({

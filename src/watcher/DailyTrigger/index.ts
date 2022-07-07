@@ -28,8 +28,16 @@ const timerTrigger: AzureFunction = async function (
   const method = 'fetch'; // fetch | intercept
   const stats = [];
 
+  const runTimestamp = new Date();
+  runTimestamp.setHours(0);
+  runTimestamp.setMinutes(0);
+  runTimestamp.setSeconds(0);
+  runTimestamp.setMilliseconds(0);
+
   if (method === 'fetch') {
     for (let i = 0; i < scripts.length; i++) {
+      // TODO: Check if script exists in DB, add if not
+
       const response = await axios.get(scripts[i].scriptUrl, {
         // Workaround to support Brotli:
         // https://github.com/axios/axios/issues/1635#issuecomment-603258750
@@ -62,11 +70,14 @@ const timerTrigger: AzureFunction = async function (
         id: scripts[i].id,
         name: scripts[i].displayName,
         url: scripts[i].scriptUrl,
+        ts: runTimestamp,
         contentLength: parseInt(headers['content-length'], 10),
         contentEncoding: headers['content-encoding'],
         contentType: headers['content-type'],
         contentLengthDecoded: content.length,
       });
+
+      // TODO: Save metric to DB
     }
   } else {
     const browser = await launch();

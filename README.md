@@ -22,7 +22,20 @@ docker-compose down
 
 ### API
 
-TODO: run Azure function from command line
+If it's the first time you've run it:
+
+1. Copy `src/api/local.settings.example.json` to `src/api/local.settings.json`
+2. Install dependencies:
+
+```sh
+cd src/api && npm i
+```
+
+Run API:
+
+```sh
+cd src/api && npm start
+```
 
 ### UI
 
@@ -30,4 +43,19 @@ TODO: run Parcel, proxy to local or QA API
 
 ### Script watcher
 
-TODO: run Azure function from command line
+If it's the first time you've run it:
+
+1. Copy `src/api/local.settings.example.json` to `src/api/local.settings.json`
+2. Install dependencies:
+
+```sh
+cd src/watcher && npm i
+```
+
+Run watcher:
+
+```sh
+cd src/watcher && npm start -- --port 7072
+```
+
+TODO: How to manually trigger

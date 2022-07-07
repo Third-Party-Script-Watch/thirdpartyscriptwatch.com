@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "source": "index.html",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build",

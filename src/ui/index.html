@@ -80,7 +80,7 @@
     <script>
       const $output = document.getElementById('output');
 
-      fetch('/data.json')
+      fetch('/api/ScriptMetrics')
         .then((response) => response.json())
         .then((data) => {
           data.forEach((script) => {

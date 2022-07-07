@@ -24,8 +24,7 @@ docker-compose down
 
 If it's the first time you've run it:
 
-1. Copy `src/api/local.settings.example.json` to `src/api/local.settings.json`
-2. Install dependencies:
+1. Install dependencies:
 
 ```sh
 cd src/api && npm i
@@ -39,14 +38,29 @@ cd src/api && npm start
 
 ### UI
 
-TODO: run Parcel, proxy to local or QA API
+If it's the first time you've run it:
+
+1. Install dependencies:
+
+```sh
+cd src/ui && npm i
+```
+
+Run ui:
+
+```sh
+cd src/ui && npm start
+```
+
+UI will be available at http://localhost:1234/
+
+TODO: proxy to local or QA API
 
 ### Script watcher
 
 If it's the first time you've run it:
 
-1. Copy `src/api/local.settings.example.json` to `src/api/local.settings.json`
-2. Install dependencies:
+1. Install dependencies:
 
 ```sh
 cd src/watcher && npm i

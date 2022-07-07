@@ -148,6 +148,18 @@
         return ((size - range[0]) / diff) * 100;
       }
 
+      function formatDate(date) {
+        return `${date.getDate().toString().padStart(2, '0')}-${(
+          date.getMonth() + 1
+        )
+          .toString()
+          .padStart(2, '0')}-${date.getFullYear()}`;
+      }
+
+      function formatSize(bytes) {
+        return `${Math.round(bytes / 1024)} KiB`;
+      }
+
       function createScript(data) {
         const html = `<h2></h2>
           <p>Last retrieved: <span class="last-retrieved"></span></p>
@@ -175,21 +187,13 @@
         const dt = new Date(data.metrics[data.metrics.length - 1].ts);
         const sz = data.metrics[data.metrics.length - 1].sz;
         const su = data.metrics[data.metrics.length - 1].su;
-        $script.querySelector('.last-retrieved').innerText = `${dt
-          .getDate()
-          .toString()
-          .padStart(2, '0')}-${(dt.getMonth() + 1)
-          .toString()
-          .padStart(2, '0')}-${dt.getFullYear()}`;
-        $script.querySelector('.last-size').innerText = `${Math.round(
-          sz / 1024
-        )} KiB`;
+        $script.querySelector('.last-retrieved').innerText = formatDate(dt);
+        $script.querySelector('.last-size').innerText = formatSize(sz);
         $script
           .querySelector('.last-size')
           .setAttribute('title', `${sz} bytes`);
-        $script.querySelector(
-          '.last-size-uncompressed'
-        ).innerText = `${Math.round(su / 1024)} KiB`;
+        $script.querySelector('.last-size-uncompressed').innerText =
+          formatSize(su);
         $script
           .querySelector('.last-size-uncompressed')
           .setAttribute('title', `${su} bytes`);
@@ -216,12 +220,8 @@
           if (data[index]) {
             const dt = new Date(data[index].ts);
             $metrics.innerHTML = `
-          Date: ${dt.getDate().toString().padStart(2, '0')}-${(
-              dt.getMonth() + 1
-            )
-              .toString()
-              .padStart(2, '0')}-${dt.getFullYear()}<br>
-          Size: ${(data[index].sz / 1024).toPrecision(2)} KiB<br>
+          Date: ${formatDate(dt)}<br>
+          Size: ${formatSize(data[index].sz)}<br>
         `;
             $metrics.style.display = 'block';
             $metrics.style.top = x.clientY - x.offsetY - 44 + 'px';

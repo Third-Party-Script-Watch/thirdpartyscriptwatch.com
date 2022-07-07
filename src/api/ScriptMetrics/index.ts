@@ -1,5 +1,20 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
+
+type Script = {
+  _id?: ObjectId;
+  id: string;
+  name: string;
+  url: string;
+  metrics?: ScriptMetric[];
+};
+
+type ScriptMetric = {
+  script?: ObjectId;
+  ts: Date;
+  sz: number;
+  su: number;
+};
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -23,13 +38,13 @@ const httpTrigger: AzureFunction = async function (
     const metricsCollection = database.collection('script-metrics');
 
     // TODO: Optionally filter by ID passed in query param
-    const scripts = await scriptsCollection.find().toArray();
+    const scripts = await scriptsCollection.find<Script>({}).toArray();
 
     const scriptMetricsLimit = new Date();
     // TODO: Get days from env, possibly query param?
     scriptMetricsLimit.setDate(scriptMetricsLimit.getDate() - 30);
     const scriptMetricsPast30Days = await metricsCollection
-      .find({
+      .find<ScriptMetric>({
         ts: { $gt: scriptMetricsLimit },
       })
       .toArray();

@@ -1,9 +1,25 @@
-import { AzureFunction, Context, HttpRequest } from '@azure/functions';
+import { AzureFunction, Context } from '@azure/functions';
+import { MongoClient, ObjectId } from 'mongodb';
 import { launch } from 'puppeteer';
 import axios from 'axios';
 import * as zlib from 'zlib';
 
 import * as scripts from './scripts.json';
+
+type Script = {
+  _id?: ObjectId;
+  id: string;
+  name: string;
+  url: string;
+  metrics?: ScriptMetric[];
+};
+
+type ScriptMetric = {
+  script?: ObjectId;
+  ts: Date;
+  sz: number;
+  su: number;
+};
 
 const decodeBody = async function (
   body: zlib.BrotliDecompress | zlib.Gunzip | zlib.Deflate
@@ -26,7 +42,15 @@ const timerTrigger: AzureFunction = async function (
   timer: any
 ): Promise<void> {
   const method = 'fetch'; // fetch | intercept
-  const stats = [];
+
+  const connectionString = process.env.MONGODB_CONNECTION_STRING;
+  if (!connectionString || connectionString === '') {
+    throw new Error('MONGODB_CONNECTION_STRING not defined');
+  }
+
+  const client = new MongoClient(connectionString);
+
+  const metrics = [];
 
   const runTimestamp = new Date();
   runTimestamp.setHours(0);
@@ -35,8 +59,29 @@ const timerTrigger: AzureFunction = async function (
   runTimestamp.setMilliseconds(0);
 
   if (method === 'fetch') {
+    // TODO: Get DB name from env so we can run separate staging DB
+    const database = client.db('tpsw');
+    const scriptsCollection = database.collection('scripts');
+    const metricsCollection = database.collection('script-metrics');
+
     for (let i = 0; i < scripts.length; i++) {
-      // TODO: Check if script exists in DB, add if not
+      // Check if script exists in DB, add if not
+      let script = await scriptsCollection.findOne<Script>({
+        id: scripts[i].id,
+      });
+
+      if (script === null) {
+        const result = await scriptsCollection.insertOne({
+          id: scripts[i].id,
+          name: scripts[i].displayName,
+          url: scripts[i].scriptUrl,
+        });
+
+        if (!result.acknowledged) {
+          throw new Error(`Error inserting new script ${scripts[i].id}`);
+        }
+        script = await scriptsCollection.findOne<Script>({ id: scripts[i].id });
+      }
 
       const response = await axios.get(scripts[i].scriptUrl, {
         // Workaround to support Brotli:
@@ -66,18 +111,23 @@ const timerTrigger: AzureFunction = async function (
       const headers = response.headers;
       const content = await decodeBody(response.data);
 
-      stats.push({
-        id: scripts[i].id,
-        name: scripts[i].displayName,
-        url: scripts[i].scriptUrl,
+      metrics.push({
+        script: script._id,
         ts: runTimestamp,
-        contentLength: parseInt(headers['content-length'], 10),
-        contentEncoding: headers['content-encoding'],
-        contentType: headers['content-type'],
-        contentLengthDecoded: content.length,
+        sz: parseInt(headers['content-length'], 10),
+        su: content.length,
+        // contentLength: parseInt(headers['content-length'], 10),
+        // contentEncoding: headers['content-encoding'],
+        // contentType: headers['content-type'],
+        // contentLengthDecoded: content.length,
       });
+    }
 
-      // TODO: Save metric to DB
+    const result = await metricsCollection.insertMany(metrics);
+    if (result.acknowledged) {
+      console.log(`Inserted ${result.insertedCount} metrics`);
+    } else {
+      throw new Error('Error inserting metrics');
     }
   } else {
     const browser = await launch();
@@ -90,7 +140,7 @@ const timerTrigger: AzureFunction = async function (
       if (response !== null) {
         const headers = response.headers();
         const content = await response.buffer();
-        stats.push({
+        metrics.push({
           url: response.url(),
           responseLength: parseInt(headers['content-length'], 10),
           responseEncoding: headers['content-encoding'],
@@ -122,12 +172,6 @@ const timerTrigger: AzureFunction = async function (
     }
     await browser.close();
   }
-
-  console.log(stats);
-
-  // context.res = {
-  //   body: stats,
-  // };
 };
 
 export default timerTrigger;

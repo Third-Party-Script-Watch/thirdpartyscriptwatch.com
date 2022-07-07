@@ -16,7 +16,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         background-color: #e3e3e3;
@@ -28,14 +27,204 @@
         font-weight: 100;
       }
 
+      h2 {
+        font-weight: 100;
+      }
+
       p {
-        margin: 16px;
         font-weight: 300;
+      }
+
+      .script h2 {
+        margin: 0 0 8px;
+      }
+
+      .script p {
+        margin: 0 0 4px;
+      }
+
+      .chart {
+        width: 300px;
+        height: 104px;
+        padding: 16px 0;
+        margin: 12px 0 32px;
+        border-left: 1px dotted #555;
+        border-bottom: 1px dotted #555;
+      }
+
+      .metrics {
+        display: none;
+        position: absolute;
+        top: 32px;
+        left: 32px;
+        width: 120px;
+        padding: 8px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #e3e3e3;
+        font-size: 12px;
+        border-radius: 4px;
+        text-align: left;
       }
     </style>
   </head>
   <body class="ridge">
     <h1>Third Party Script Watch</h1>
-    <p>Coming soon</p>
+
+    <div id="output"></div>
+
+    <p class="metrics">
+      Date: -<br />
+      Size: -<br />
+    </p>
+
+    <script>
+      const $output = document.getElementById('output');
+
+      fetch('/data.json')
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((script) => {
+            if (script.metrics.length < 30) {
+              script.metrics = fillEmpty(script.metrics);
+            }
+            const $el = createScript(script);
+            $output.appendChild($el);
+          });
+        });
+
+      function fillEmpty(data) {
+        const startDate = new Date(data[0].ts);
+        data = data.reverse();
+        while (data.length < 30) {
+          const date = new Date(startDate);
+          date.setDate(startDate.getDate() - data.length + 1);
+          data.push({
+            ts: `${date.getFullYear()}-${(date.getMonth() + 1)
+              .toString()
+              .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`,
+            sz: 0,
+          });
+        }
+
+        return data.reverse();
+      }
+
+      function generatePoints(data) {
+        const pointsArray = [];
+        const range = getRange(data);
+        data.forEach((x, i) => {
+          pointsArray.push(`${i * 10}, ${102 - getPointHeight(x.sz, range)}`);
+        });
+
+        return pointsArray.join('\n');
+      }
+
+      function getRange(data) {
+        let min = data[0].sz;
+        let max = data[0].sz;
+
+        data.forEach((x) => {
+          if (x.sz < min) {
+            min = x.sz;
+          }
+          if (x.sz > max) {
+            max = x.sz;
+          }
+        });
+
+        return [min, max];
+      }
+
+      function getPointHeight(size, range) {
+        const diff = range[1] - range[0];
+        return ((size - range[0]) / diff) * 100;
+      }
+
+      function createScript(data) {
+        const html = `<h2></h2>
+          <p>Last retrieved: <span class="last-retrieved"></span></p>
+          <p>
+            Last size: <span class="last-size"></span> (<span
+              class="last-size-uncompressed"
+            ></span>
+            uncompressed)
+          </p>
+          <svg viewBox="0 0 300 104" class="chart">
+            <polyline
+              class="chart-line"
+              fill="none"
+              stroke="#0074d9"
+              stroke-width="2"
+              points=""
+            />
+          </svg>`;
+
+        const $script = document.createElement('div');
+        $script.className = 'script';
+        $script.innerHTML = html;
+        $script.querySelector('h2').innerText = data.name;
+
+        const dt = new Date(data.metrics[data.metrics.length - 1].ts);
+        const sz = data.metrics[data.metrics.length - 1].sz;
+        const su = data.metrics[data.metrics.length - 1].su;
+        $script.querySelector('.last-retrieved').innerText = `${dt
+          .getDate()
+          .toString()
+          .padStart(2, '0')}-${(dt.getMonth() + 1)
+          .toString()
+          .padStart(2, '0')}-${dt.getFullYear()}`;
+        $script.querySelector('.last-size').innerText = `${Math.round(
+          sz / 1024
+        )} KiB`;
+        $script
+          .querySelector('.last-size')
+          .setAttribute('title', `${sz} bytes`);
+        $script.querySelector(
+          '.last-size-uncompressed'
+        ).innerText = `${Math.round(su / 1024)} KiB`;
+        $script
+          .querySelector('.last-size-uncompressed')
+          .setAttribute('title', `${su} bytes`);
+
+        const $chartLine = $script.querySelector('.chart-line');
+        const points = generatePoints(data.metrics);
+        $chartLine.setAttribute('points', points);
+
+        const $chart = $script.querySelector('.chart');
+        attachHandlers($chart, data.metrics);
+
+        return $script;
+      }
+
+      function attachHandlers($chart, data) {
+        //const $chart = document.querySelector('.chart');
+        const $metrics = document.querySelector('.metrics');
+
+        $chart.addEventListener('mouseout', () => {
+          $metrics.style.display = 'none';
+        });
+        $chart.addEventListener('mousemove', (x) => {
+          const index = Math.round(x.offsetX / 10);
+          if (data[index]) {
+            const dt = new Date(data[index].ts);
+            $metrics.innerHTML = `
+          Date: ${dt.getDate().toString().padStart(2, '0')}-${(
+              dt.getMonth() + 1
+            )
+              .toString()
+              .padStart(2, '0')}-${dt.getFullYear()}<br>
+          Size: ${(data[index].sz / 1024).toPrecision(2)} KiB<br>
+        `;
+            $metrics.style.display = 'block';
+            $metrics.style.top = x.clientY - x.offsetY - 44 + 'px';
+            if (x.clientX + 152 > window.innerWidth) {
+              $metrics.style.left = x.clientX - 152 + 'px';
+            } else {
+              $metrics.style.left = x.clientX + 'px';
+            }
+          }
+        });
+      }
+    </script>
   </body>
 </html>

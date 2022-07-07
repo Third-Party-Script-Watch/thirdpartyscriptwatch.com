@@ -2,6 +2,9 @@
   "name": "watcher",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",

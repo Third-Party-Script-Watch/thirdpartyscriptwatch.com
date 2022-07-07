@@ -1,0 +1,8 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "MONGODB_CONNECTION_STRING": "mongodb://root:myPasSw0Rd123@localhost:27017/admin",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsStorage": ""
+  }
+}

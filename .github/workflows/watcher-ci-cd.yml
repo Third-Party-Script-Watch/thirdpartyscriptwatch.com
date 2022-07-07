@@ -14,7 +14,7 @@ concurrency:
 env:
   NODE_VERSION: 16
   AZURE_FUNCTIONAPP_NAME: third-party-script-watch
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/watcher'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'src/watcher'
 
 jobs:
   build_and_deploy_job:

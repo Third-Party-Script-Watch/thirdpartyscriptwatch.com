@@ -1,6 +1,8 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions';
 import { MongoClient, ObjectId } from 'mongodb';
 
+import * as mockData from './mock-data.json';
+
 type Script = {
   _id?: ObjectId;
   id: string;
@@ -21,10 +23,16 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   const connectionString = process.env.MONGODB_CONNECTION_STRING;
-  // TODO: If no connection string, we might be running in a PR environment
-  // should probably load dummy data from JSON or something
+  // If no connection string, we might be running in a PR environment
+  // Just return mock data
   if (!connectionString || connectionString === '') {
-    throw new Error('MONGODB_CONNECTION_STRING not defined');
+    console.warn('MONGODB_CONNECTION_STRING not defined');
+
+    context.res = {
+      body: mockData,
+    };
+
+    return;
   }
 
   const client = new MongoClient(connectionString);

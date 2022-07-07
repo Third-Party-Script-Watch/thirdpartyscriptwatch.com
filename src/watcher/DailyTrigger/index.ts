@@ -21,9 +21,9 @@ const decodeBody = async function (
   });
 };
 
-const httpTrigger: AzureFunction = async function (
+const timerTrigger: AzureFunction = async function (
   context: Context,
-  req: HttpRequest
+  timer: any
 ): Promise<void> {
   const method = 'fetch'; // fetch | intercept
   const stats = [];
@@ -112,9 +112,11 @@ const httpTrigger: AzureFunction = async function (
     await browser.close();
   }
 
-  context.res = {
-    body: stats,
-  };
+  console.log(stats);
+
+  // context.res = {
+  //   body: stats,
+  // };
 };
 
-export default httpTrigger;
+export default timerTrigger;

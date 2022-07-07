@@ -66,10 +66,15 @@ If it's the first time you've run it:
 cd src/watcher && npm i
 ```
 
-Run watcher:
+Run storage emulator &  watcher:
 
 ```sh
+docker run -p 10000:10000 mcr.microsoft.com/azure-storage/azurite azurite-blob --blobHost 0.0.0.0 --blobPort 10000
 cd src/watcher && npm start -- --port 7072
 ```
 
-TODO: How to manually trigger
+Manually trigger:
+
+```sh
+curl -v -H "Content-Type:application/json" --data {} http://localhost:7072/admin/functions/DailyTrigger
+```

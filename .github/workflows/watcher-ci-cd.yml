@@ -27,7 +27,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install dependencies & build
         shell: bash
-        working-directory: ./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        working-directory: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
         run: |
           npm install
           npm run build

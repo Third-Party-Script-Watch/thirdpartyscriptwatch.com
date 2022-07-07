@@ -124,7 +124,7 @@
           pointsArray.push(`${i * 10}, ${102 - getPointHeight(x.sz, range)}`);
         });
 
-        return pointsArray.join('\n');
+        return pointsArray;
       }
 
       function getRange(data) {
@@ -175,6 +175,7 @@
               stroke-width="2"
               points=""
             />
+            <circle cx="-16" cy="-16" r="4" fill="#DB00FF" class="chart-indicator" />
           </svg>`;
 
         const $script = document.createElement('div');
@@ -198,17 +199,17 @@
 
         const $chartLine = $script.querySelector('.chart-line');
         const points = generatePoints(data.metrics);
-        $chartLine.setAttribute('points', points);
+        $chartLine.setAttribute('points', points.join('\n'));
 
         const $chart = $script.querySelector('.chart');
-        attachHandlers($chart, data.metrics);
+        attachHandlers($chart, data.metrics, points);
 
         return $script;
       }
 
-      function attachHandlers($chart, data) {
-        //const $chart = document.querySelector('.chart');
+      function attachHandlers($chart, data, points) {
         const $metrics = document.querySelector('.metrics');
+        const $chartIndicator = $chart.querySelector('.chart-indicator');
 
         $chart.addEventListener('mouseout', () => {
           $metrics.style.display = 'none';
@@ -218,16 +219,19 @@
           if (data[index]) {
             const dt = new Date(data[index].ts);
             $metrics.innerHTML = `
-          Date: ${formatDate(dt)}<br>
-          Size: ${formatSize(data[index].sz)}<br>
-        `;
+              Date: ${formatDate(dt)}<br>
+              Size: ${formatSize(data[index].sz)}<br>
+            `;
             $metrics.style.display = 'block';
             $metrics.style.top = x.pageY - x.offsetY - 44 + 'px';
-            if (x.clientX + 152 > window.innerWidth) {
-              $metrics.style.left = x.clientX - 152 + 'px';
+            if (x.clientX - 60 + 152 > window.innerWidth) {
+              $metrics.style.left = x.clientX - 60 - 152 + 'px';
             } else {
-              $metrics.style.left = x.clientX + 'px';
+              $metrics.style.left = x.clientX - 60 + 'px';
             }
+
+            $chartIndicator.setAttribute('cx', index * 10);
+            $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
           }
         });
       }

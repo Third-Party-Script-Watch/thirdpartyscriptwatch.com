@@ -36,7 +36,16 @@ const httpTrigger: AzureFunction = async function (
           ...x,
           _id: undefined,
           script: undefined,
-        }));
+        }))
+        .sort((a: any, b: any) => {
+          if (a.ts.getTime() > b.ts.getTime()) {
+            return 1;
+          }
+          if (a.ts.getTime() < b.ts.getTime()) {
+            return -1;
+          }
+          return -1;
+        });
 
       metricsData.push({ ...script, _id: undefined });
     });

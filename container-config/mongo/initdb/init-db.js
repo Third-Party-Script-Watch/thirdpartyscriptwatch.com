@@ -12,8 +12,8 @@ const script2 = {
 db['scripts'].save(script2);
 
 db['script-metrics'].insertMany([
-    { 'script': script1._id, 'ts': getOffsetDate(0), 'sz': 71692, 'su': 171692 },
-    { 'script': script1._id, 'ts': getOffsetDate(1), 'sz': 70650, 'su': 170650 },
+    { 'script': script1._id, 'ts': getOffsetDate(0), 'sz': 86234, 'su': 186234 },
+    { 'script': script1._id, 'ts': getOffsetDate(1), 'sz': 91621, 'su': 191621 },
     { 'script': script1._id, 'ts': getOffsetDate(2), 'sz': 71692, 'su': 171692 },
     { 'script': script1._id, 'ts': getOffsetDate(3), 'sz': 70515, 'su': 170515 },
     { 'script': script1._id, 'ts': getOffsetDate(4), 'sz': 71360, 'su': 171360 },
@@ -40,8 +40,8 @@ db['script-metrics'].insertMany([
     { 'script': script1._id, 'ts': getOffsetDate(25), 'sz': 71202, 'su': 171202 },
     { 'script': script1._id, 'ts': getOffsetDate(26), 'sz': 70828, 'su': 170828 },
     { 'script': script1._id, 'ts': getOffsetDate(27), 'sz': 70157, 'su': 170157 },
-    { 'script': script1._id, 'ts': getOffsetDate(28), 'sz': 86234, 'su': 186234 },
-    { 'script': script1._id, 'ts': getOffsetDate(29), 'sz': 91621, 'su': 191621 },
+    { 'script': script1._id, 'ts': getOffsetDate(28), 'sz': 71692, 'su': 171692 },
+    { 'script': script1._id, 'ts': getOffsetDate(29), 'sz': 70650, 'su': 170650 },
     { 'script': script1._id, 'ts': getOffsetDate(30), 'sz': 11111, 'su': 222222 },
     { 'script': script1._id, 'ts': getOffsetDate(31), 'sz': 11111, 'su': 222222 },
     { 'script': script1._id, 'ts': getOffsetDate(32), 'sz': 11111, 'su': 222222 },
@@ -49,7 +49,7 @@ db['script-metrics'].insertMany([
     { 'script': script1._id, 'ts': getOffsetDate(34), 'sz': 11111, 'su': 222222 },
     { 'script': script1._id, 'ts': getOffsetDate(35), 'sz': 11111, 'su': 222222 },
     { 'script': script2._id, 'ts': getOffsetDate(0), 'sz': 54486, 'su': 154486 },
-    { 'script': script2._id, 'ts': getOffsetDate(1), 'sz': 54486, 'su': 154486 }
+    { 'script': script2._id, 'ts': getOffsetDate(1), 'sz': 53961, 'su': 1543961 }
 ]);
 
 

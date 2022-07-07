@@ -70,7 +70,14 @@
   <body class="ridge">
     <h1>Third Party Script Watch</h1>
 
-    <div id="output"></div>
+    <div id="output">
+      <img
+        src="images/loading.svg"
+        class="loading-spinner"
+        width="32"
+        alt="Loading..."
+      />
+    </div>
 
     <p class="metrics">
       Date: -<br />
@@ -83,6 +90,7 @@
       fetch('/api/ScriptMetrics')
         .then((response) => response.json())
         .then((data) => {
+          $output.innerHTML = '';
           data.forEach((script) => {
             if (script.metrics.length < 30) {
               script.metrics = fillEmpty(script.metrics);

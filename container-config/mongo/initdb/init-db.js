@@ -12,7 +12,7 @@ const script2 = {
 db['scripts'].save(script2);
 
 db['script-metrics'].insertMany([
-    { 'script': script1._id, 'retrieved': getOffsetDate(0), 'contentLength': 86234, 'contentLengthUncompressed': 186234, 'contentType': 'application/javascript', 'contentEncoding': 'br' },
+    { 'script': script1._id, 'retrieved': getOffsetDate(0), 'contentLength': 71692, 'contentLengthUncompressed': 171692, 'contentType': 'application/javascript', 'contentEncoding': 'br' },
     { 'script': script1._id, 'retrieved': getOffsetDate(1), 'contentLength': 91621, 'contentLengthUncompressed': 191621, 'contentType': 'application/javascript', 'contentEncoding': 'gzip' },
     { 'script': script1._id, 'retrieved': getOffsetDate(2), 'contentLength': 71692, 'contentLengthUncompressed': 171692, 'contentType': 'application/javascript', 'contentEncoding': 'br' },
     { 'script': script1._id, 'retrieved': getOffsetDate(3), 'contentLength': 70515, 'contentLengthUncompressed': 170515, 'contentType': 'application/javascript', 'contentEncoding': 'br' },

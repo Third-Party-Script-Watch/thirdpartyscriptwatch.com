@@ -1,22 +1,9 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions';
 import { MongoClient, ObjectId } from 'mongodb';
 
+import { Script, ScriptMetric } from './models';
+
 import * as mockData from './mock-data.json';
-
-type Script = {
-  _id?: ObjectId;
-  id: string;
-  name: string;
-  url: string;
-  metrics?: ScriptMetric[];
-};
-
-type ScriptMetric = {
-  script?: ObjectId;
-  ts: Date;
-  sz: number;
-  su: number;
-};
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -53,7 +40,7 @@ const httpTrigger: AzureFunction = async function (
     scriptMetricsLimit.setDate(scriptMetricsLimit.getDate() - 30);
     const scriptMetricsPast30Days = await metricsCollection
       .find<ScriptMetric>({
-        ts: { $gt: scriptMetricsLimit },
+        retrieved: { $gt: scriptMetricsLimit },
       })
       .toArray();
 
@@ -66,10 +53,10 @@ const httpTrigger: AzureFunction = async function (
           script: undefined,
         }))
         .sort((a: any, b: any) => {
-          if (a.ts.getTime() > b.ts.getTime()) {
+          if (a.retrieved.getTime() > b.retrieved.getTime()) {
             return 1;
           }
-          if (a.ts.getTime() < b.ts.getTime()) {
+          if (a.retrieved.getTime() < b.retrieved.getTime()) {
             return -1;
           }
           return -1;

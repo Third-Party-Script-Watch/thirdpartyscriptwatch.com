@@ -55,8 +55,8 @@ const timerTrigger: AzureFunction = async function (
     if (script === null) {
       const result = await scriptsCollection.insertOne({
         id: scripts[i].id,
-        name: scripts[i].displayName,
-        url: scripts[i].scriptUrl,
+        name: scripts[i].name,
+        url: scripts[i].url,
       });
 
       if (!result.acknowledged) {
@@ -65,7 +65,7 @@ const timerTrigger: AzureFunction = async function (
       script = await scriptsCollection.findOne<Script>({ id: scripts[i].id });
     }
 
-    const response = await axios.get(scripts[i].scriptUrl, {
+    const response = await axios.get(scripts[i].url, {
       // Workaround to support Brotli:
       // https://github.com/axios/axios/issues/1635#issuecomment-603258750
       headers: {

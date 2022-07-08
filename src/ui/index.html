@@ -120,7 +120,7 @@
           >
         </li>
         <li>
-          Code &amp; issues on
+          Code &amp; iscontentLengthUncompressedes on
           <a
             href="https://github.com/Third-Party-Script-Watch/thirdpartyscriptwatch.com"
             >Github</a
@@ -146,16 +146,16 @@
         });
 
       function fillEmpty(data) {
-        const startDate = new Date(data[0].ts);
+        const startDate = new Date(data[0].retrieved);
         data = data.reverse();
         while (data.length < 30) {
           const date = new Date(startDate);
           date.setDate(startDate.getDate() - data.length + 1);
           data.push({
-            ts: `${date.getFullYear()}-${(date.getMonth() + 1)
+            retrieved: `${date.getFullYear()}-${(date.getMonth() + 1)
               .toString()
               .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`,
-            sz: -1,
+            contentLength: -1,
           });
         }
 
@@ -166,22 +166,24 @@
         const pointsArray = [];
         const range = getRange(data);
         data.forEach((x, i) => {
-          pointsArray.push(`${i * 10}, ${102 - getPointHeight(x.sz, range)}`);
+          pointsArray.push(
+            `${i * 10}, ${102 - getPointHeight(x.contentLength, range)}`
+          );
         });
 
         return pointsArray;
       }
 
       function getRange(data) {
-        let min = data[0].sz;
-        let max = data[0].sz;
+        let min = data[0].contentLength;
+        let max = data[0].contentLength;
 
         data.forEach((x) => {
-          if (x.sz < min) {
-            min = x.sz;
+          if (x.contentLength < min) {
+            min = x.contentLength;
           }
-          if (x.sz > max) {
-            max = x.sz;
+          if (x.contentLength > max) {
+            max = x.contentLength;
           }
         });
 
@@ -228,19 +230,23 @@
         $script.innerHTML = html;
         $script.querySelector('h2').innerText = data.name;
 
-        const dt = new Date(data.metrics[data.metrics.length - 1].ts);
-        const sz = data.metrics[data.metrics.length - 1].sz;
-        const su = data.metrics[data.metrics.length - 1].su;
+        const dt = new Date(data.metrics[data.metrics.length - 1].retrieved);
+        const contentLength =
+          data.metrics[data.metrics.length - 1].contentLength;
+        const contentLengthUncompressed =
+          data.metrics[data.metrics.length - 1].contentLengthUncompressed;
         $script.querySelector('.last-retrieved').innerText = formatDate(dt);
-        $script.querySelector('.last-size').innerText = formatSize(sz);
+        $script.querySelector('.last-size').innerText =
+          formatSize(contentLength);
         $script
           .querySelector('.last-size')
-          .setAttribute('title', `${sz} bytes`);
-        $script.querySelector('.last-size-uncompressed').innerText =
-          formatSize(su);
+          .setAttribute('title', `${contentLength} bytes`);
+        $script.querySelector('.last-size-uncompressed').innerText = formatSize(
+          contentLengthUncompressed
+        );
         $script
           .querySelector('.last-size-uncompressed')
-          .setAttribute('title', `${su} bytes`);
+          .setAttribute('title', `${contentLengthUncompressed} bytes`);
 
         const $chartLine = $script.querySelector('.chart-line');
         const points = generatePoints(data.metrics);
@@ -262,11 +268,13 @@
         $chart.addEventListener('mousemove', (x) => {
           const index = Math.round(x.offsetX / 10);
           if (data[index]) {
-            const dt = new Date(data[index].ts);
+            const dt = new Date(data[index].retrieved);
             $metrics.innerHTML = `
               Date: ${formatDate(dt)}<br>
               Size: ${
-                data[index].sz === -1 ? '-' : formatSize(data[index].sz)
+                data[index].contentLength === -1
+                  ? '-'
+                  : formatSize(data[index].contentLength)
               }<br>
             `;
             $metrics.style.display = 'block';

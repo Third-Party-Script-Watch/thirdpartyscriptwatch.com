@@ -5,6 +5,12 @@
       "type": "timerTrigger",
       "direction": "in",
       "schedule": "0 0 0 * * *"
+    },
+    {
+      "name": "dataOutput",
+      "type": "blob",
+      "path": "data/mock-data.json",
+      "direction": "out"
     }
   ],
   "scriptFile": "../dist/DailyTrigger/index.js"

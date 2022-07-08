@@ -125,6 +125,9 @@ const timerTrigger: AzureFunction = async function (
   } else {
     throw new Error('Error inserting metrics');
   }
+
+  // TODO: Grab metrics for last 30 days & output JSON file to blob storage:
+  // context.bindings.dataOutput = '{"message":"yolo"}';
 };
 
 export default timerTrigger;

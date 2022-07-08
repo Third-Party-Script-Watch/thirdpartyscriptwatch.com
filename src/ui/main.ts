@@ -151,9 +151,12 @@ if ($output !== null) {
             ? '-'
             : formatSize(data[index].contentLength)
         }<br>
+        Encoding: ${
+          data[index].contentLength === -1 ? '-' : data[index].contentEncoding
+        }
       `;
           $metrics.style.display = 'block';
-          $metrics.style.top = x.pageY - x.offsetY - 44 + 'px';
+          $metrics.style.top = x.pageY - x.offsetY - 58 + 'px';
           if (x.clientX - 60 + 152 > window.innerWidth) {
             $metrics.style.left = x.clientX - 60 - 152 + 'px';
           } else {

@@ -9,7 +9,7 @@
     {
       "name": "dataOutput",
       "type": "blob",
-      "path": "data/mock-data.json",
+      "path": "data/metrics-30.json",
       "direction": "out"
     }
   ],

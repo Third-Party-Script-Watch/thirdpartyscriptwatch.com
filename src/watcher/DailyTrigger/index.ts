@@ -110,8 +110,52 @@ const timerTrigger: AzureFunction = async function (
     throw new Error('Error inserting metrics');
   }
 
-  // TODO: Grab metrics for last 30 days & output JSON file to blob storage:
-  // context.bindings.dataOutput = '{"message":"yolo"}';
+  // Grab metrics for last 30 days & output JSON file to blob storage
+  const metricsData = [];
+
+  try {
+    // TODO: Get DB name from env so we can run separate staging DB
+    const database = client.db('tpsw');
+    const scriptsCollection = database.collection('scripts');
+    const metricsCollection = database.collection('script-metrics');
+
+    const scripts = await scriptsCollection.find<Script>({}).toArray();
+
+    const scriptMetricsLimit = new Date();
+    scriptMetricsLimit.setDate(scriptMetricsLimit.getDate() - 30);
+    const scriptMetricsPast30Days = await metricsCollection
+      .find<ScriptMetric>({
+        retrieved: { $gt: scriptMetricsLimit },
+      })
+      .toArray();
+
+    scripts.forEach((script) => {
+      script.metrics = scriptMetricsPast30Days
+        .filter((x) => x.script.equals(script._id))
+        .map((x) => ({
+          ...x,
+          _id: undefined,
+          script: undefined,
+        }))
+        .sort((a: any, b: any) => {
+          if (a.retrieved.getTime() > b.retrieved.getTime()) {
+            return 1;
+          }
+          if (a.retrieved.getTime() < b.retrieved.getTime()) {
+            return -1;
+          }
+          return -1;
+        });
+
+      metricsData.push({ ...script, _id: undefined });
+    });
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+
+  context.bindings.dataOutput = JSON.stringify(metricsData);
 };
 
 export default timerTrigger;

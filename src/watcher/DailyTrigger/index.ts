@@ -1,24 +1,10 @@
 import { AzureFunction, Context } from '@azure/functions';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import * as zlib from 'zlib';
 import axios from 'axios';
 
 import * as scripts from './scripts.json';
-
-type Script = {
-  _id?: ObjectId;
-  id: string;
-  name: string;
-  url: string;
-  metrics?: ScriptMetric[];
-};
-
-type ScriptMetric = {
-  script?: ObjectId;
-  ts: Date;
-  sz: number;
-  su: number;
-};
+import { Script, ScriptMetric } from './models';
 
 const decodeBody = async function (
   body: zlib.BrotliDecompress | zlib.Gunzip | zlib.Deflate
@@ -47,7 +33,7 @@ const timerTrigger: AzureFunction = async function (
 
   const client = new MongoClient(connectionString);
 
-  const metrics = [];
+  const metrics: ScriptMetric[] = [];
 
   const runTimestamp = new Date();
   runTimestamp.setHours(0);
@@ -109,13 +95,11 @@ const timerTrigger: AzureFunction = async function (
 
     metrics.push({
       script: script._id,
-      ts: runTimestamp,
-      sz: parseInt(headers['content-length'], 10),
-      su: content.length,
-      // contentLength: parseInt(headers['content-length'], 10),
-      // contentEncoding: headers['content-encoding'],
-      // contentType: headers['content-type'],
-      // contentLengthDecoded: content.length,
+      retrieved: runTimestamp,
+      contentType: headers['content-type'],
+      contentEncoding: headers['content-encoding'],
+      contentLength: parseInt(headers['content-length'], 10),
+      contentLengthUncompressed: content.length,
     });
   }
 

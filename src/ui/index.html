@@ -22,6 +22,12 @@
         color: #111;
       }
 
+      a:link,
+      a:visited {
+        color: #0074d9;
+        text-decoration-skip-ink: auto;
+      }
+
       h1 {
         margin: 16px;
         font-weight: 100;
@@ -65,9 +71,29 @@
         border-radius: 4px;
         text-align: left;
       }
+
+      footer {
+        padding: 16px 0;
+        margin-top: 32px;
+        border-top: 1px solid #ccc;
+        font-size: 14px;
+        color: #666;
+      }
+
+      footer ul {
+        display: flex;
+        flex-direction: column;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      footer li {
+        margin-bottom: 4px;
+      }
     </style>
   </head>
-  <body class="ridge">
+  <body>
     <h1>Third Party Script Watch</h1>
 
     <div id="output">
@@ -83,6 +109,25 @@
       Date: -<br />
       Size: -<br />
     </p>
+
+    <footer>
+      <ul>
+        <li>
+          Made with ☕️ by
+          <a href="https://twitter.com/lindsayevans">@lindsayevans</a>, based on
+          <a href="https://twitter.com/toolmantim/status/1544169316933062656"
+            >this conversation</a
+          >
+        </li>
+        <li>
+          Code &amp; issues on
+          <a
+            href="https://github.com/Third-Party-Script-Watch/thirdpartyscriptwatch.com"
+            >Github</a
+          >
+        </li>
+      </ul>
+    </footer>
 
     <script>
       const $output = document.getElementById('output');

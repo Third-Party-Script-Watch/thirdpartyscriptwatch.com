@@ -14,10 +14,9 @@ const timerTrigger: AzureFunction = async function (
     throw new Error('MONGODB_CONNECTION_STRING not defined');
   }
 
-  const client = new MongoClient(connectionString);
-
   const metrics = await getMetrics();
 
+  const client = new MongoClient(connectionString);
   try {
     const database = client.db(process.env.MONGODB_DATABASE || 'tpsw');
     const scriptsCollection = database.collection('scripts');
@@ -115,25 +114,34 @@ async function getMetrics(): Promise<ScriptMetric[]> {
     const page = await context.newPage();
     await page.setCacheEnabled(false);
 
+    const cdpSession = await page.target().createCDPSession();
+    await cdpSession.send('Network.enable');
+
     const script = scripts[i];
 
-    page.on('requestfinished', async (req) => {
-      const response = req.response();
-      if (response !== null) {
-        const headers = response.headers();
-        const content = await response.buffer();
+    const responseMetrics: Record<string, ScriptMetric> = {};
 
-        metrics.push({
-          scriptId: script.id,
-          retrieved,
-          url: response.url(),
-          isInitialRequest: script.url.startsWith(response.url()),
-          contentType: headers['content-type'],
-          contentEncoding: headers['content-encoding'],
-          contentLength: parseInt(headers['content-length'], 10),
-          contentLengthUncompressed: content.byteLength,
-        });
-      }
+    cdpSession.on('Network.responseReceived', (e) => {
+      responseMetrics[e.requestId] = {
+        scriptId: script.id,
+        retrieved,
+        url: e.response.url,
+        isInitialRequest: script.url.startsWith(e.response.url),
+        contentType: e.response.headers['content-type'],
+        contentEncoding: e.response.headers['content-encoding'],
+        contentLength: 0,
+        contentLengthUncompressed: 0,
+      };
+    });
+
+    cdpSession.on('Network.dataReceived', (e) => {
+      responseMetrics[e.requestId].contentLengthUncompressed += e.dataLength;
+    });
+
+    cdpSession.on('Network.loadingFinished', (e) => {
+      responseMetrics[e.requestId].contentLength = e.encodedDataLength;
+
+      metrics.push(responseMetrics[e.requestId]);
     });
 
     await page.setContent(

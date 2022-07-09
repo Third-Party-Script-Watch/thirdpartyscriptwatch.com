@@ -1,6 +1,6 @@
 {
-  "azureFunctions.projectSubpath": "src/api",
-  "azureFunctions.deploySubpath": "src/api",
+  "azureFunctions.projectSubpath": "src/watcher",
+  "azureFunctions.deploySubpath": "src/watcher",
   "azureFunctions.postDeployTask": "npm install (functions)",
   "azureFunctions.projectLanguage": "TypeScript",
   "azureFunctions.projectRuntime": "~4",

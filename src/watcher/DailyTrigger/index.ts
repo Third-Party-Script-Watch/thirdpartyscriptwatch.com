@@ -15,6 +15,13 @@ const timerTrigger: AzureFunction = async function (
     throw new Error('MONGODB_CONNECTION_STRING not defined');
   }
 
+  scripts.push({
+    id: '__inception',
+    name: 'TPSW',
+    url: 'https://thirdpartyscriptwatch.com/',
+    initialisationHtml: '',
+  });
+
   const metrics = await getMetrics();
 
   const client = new MongoClient(connectionString);
@@ -146,8 +153,11 @@ async function getMetrics(): Promise<ScriptMetric[]> {
       metrics.push(responseMetrics[e.requestId]);
     });
 
-    await page.setContent(
-      `<!DOCTYPE html>
+    if (script.id === '__inception') {
+      await page.goto(script.url, { waitUntil: 'networkidle0' });
+    } else {
+      await page.setContent(
+        `<!DOCTYPE html>
         <html lang="en">
           <head>
             <meta charset="utf-8" />
@@ -159,8 +169,9 @@ async function getMetrics(): Promise<ScriptMetric[]> {
             ${script.initialisationHtml}
         </body>
         </html>`,
-      { waitUntil: 'networkidle0' }
-    );
+        { waitUntil: 'networkidle0' }
+      );
+    }
   }
 
   await browser.close();

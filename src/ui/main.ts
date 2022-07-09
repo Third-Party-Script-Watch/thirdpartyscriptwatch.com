@@ -1,11 +1,9 @@
 const $output = document.getElementById('output');
 
 if ($output !== null) {
-  let dataUrl = 'https://data.thirdpartyscriptwatch.com/data/metrics-30.json';
-  if (process.env.NODE_ENV === 'development') {
-    // TODO: Need to come up with a way to do this without Azure Storage Emulator running
-    dataUrl = 'http://127.0.0.1:10000/devstoreaccount1/data/metrics-30.json';
-  }
+  const dataUrl = 'https://data.thirdpartyscriptwatch.com/data/metrics-30.json';
+  // For local testing against Azure Storage Emulator:
+  // const dataUrl = 'http://127.0.0.1:10000/devstoreaccount1/data/metrics-30.json';
 
   fetch(dataUrl)
     .then((response) => response.json())

@@ -19,6 +19,12 @@ a:link,
 a:visited {
   color: #0074d9;
   text-decoration-skip-ink: auto;
+  transition: color 0.15s ease-in-out;
+}
+
+a:hover,
+a:active {
+  color: #db00ff;
 }
 
 .loading-spinner {

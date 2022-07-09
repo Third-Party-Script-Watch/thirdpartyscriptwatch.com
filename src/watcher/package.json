@@ -13,8 +13,8 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "axios": "^0.27.2",
-    "mongodb": "^4.7.0"
+    "mongodb": "^4.7.0",
+    "puppeteer": "^15.3.2"
   },
   "devDependencies": {
     "@azure/functions": "^3.0.0",

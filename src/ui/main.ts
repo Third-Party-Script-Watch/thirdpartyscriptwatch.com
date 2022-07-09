@@ -176,7 +176,7 @@ if ($output !== null) {
         stroke-width="1"
         points=""
       />
-      <line x1="1" y1="1" x2="1" y2="104" stroke="#CCCCCC" class="chart-indicator-line"/>
+      <line x1="-16" y1="1" x2="-16" y2="104" stroke="#CCCCCC" class="chart-indicator-line"/>
       <circle cx="-16" cy="-16" r="2" fill="#DB00FF" class="chart-indicator" />
     </svg>`;
 

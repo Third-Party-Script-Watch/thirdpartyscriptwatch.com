@@ -5,9 +5,14 @@ if ($output !== null) {
   // For local testing against Azure Storage Emulator:
   // const dataUrl = 'http://127.0.0.1:10000/devstoreaccount1/data/metrics-30.json';
 
+  setTimeout(() => {
+    document.body.classList.add('loading');
+  }, 300);
+
   fetch(dataUrl)
     .then((response) => response.json())
     .then((data) => {
+      document.body.classList.remove('loading');
       $output.innerHTML = '';
       data.forEach((script) => {
         script.metrics = groupSubresources(script.metrics);

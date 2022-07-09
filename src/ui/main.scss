@@ -21,6 +21,15 @@ a:visited {
   text-decoration-skip-ink: auto;
 }
 
+.loading-spinner {
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.loading .loading-spinner {
+  opacity: 1;
+}
+
 h1 {
   margin: 16px;
   font-weight: 100;

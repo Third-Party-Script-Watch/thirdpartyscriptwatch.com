@@ -1,9 +1,10 @@
 import { AzureFunction, Context } from '@azure/functions';
 import { MongoClient } from 'mongodb';
+import { launch } from 'puppeteer';
+import * as hpack from 'hpack';
 
 import * as scripts from './scripts.json';
 import { Script, ScriptMetric } from './models';
-import { launch } from 'puppeteer';
 
 const timerTrigger: AzureFunction = async function (
   context: Context,
@@ -122,6 +123,7 @@ async function getMetrics(): Promise<ScriptMetric[]> {
     const responseMetrics: Record<string, ScriptMetric> = {};
 
     cdpSession.on('Network.responseReceived', (e) => {
+      const headersSize = getHeadersSize(e.response);
       responseMetrics[e.requestId] = {
         scriptId: script.id,
         retrieved,
@@ -129,8 +131,8 @@ async function getMetrics(): Promise<ScriptMetric[]> {
         isInitialRequest: script.url.startsWith(e.response.url),
         contentType: e.response.headers['content-type'],
         contentEncoding: e.response.headers['content-encoding'],
-        contentLength: 0,
-        contentLengthUncompressed: 0,
+        contentLength: headersSize,
+        contentLengthUncompressed: headersSize,
       };
     });
 
@@ -139,7 +141,7 @@ async function getMetrics(): Promise<ScriptMetric[]> {
     });
 
     cdpSession.on('Network.loadingFinished', (e) => {
-      responseMetrics[e.requestId].contentLength = e.encodedDataLength;
+      responseMetrics[e.requestId].contentLength += e.encodedDataLength;
 
       metrics.push(responseMetrics[e.requestId]);
     });
@@ -164,6 +166,21 @@ async function getMetrics(): Promise<ScriptMetric[]> {
   await browser.close();
 
   return metrics;
+}
+
+function getHeadersSize(response): number {
+  if (response.headersText !== undefined) {
+    return response.headersText.length;
+  }
+
+  const headers = Object.keys(response.headers).map((x) => [
+    x,
+    response.headers[x],
+  ]);
+  const codec = new hpack();
+  const encoded = codec.encode(headers);
+
+  return encoded.byteLength;
 }
 
 export default timerTrigger;

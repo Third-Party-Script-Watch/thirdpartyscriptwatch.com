@@ -178,12 +178,25 @@ if ($output !== null) {
       />
       <line x1="-16" y1="1" x2="-16" y2="104" stroke="#CCCCCC" class="chart-indicator-line"/>
       <circle cx="-16" cy="-16" r="2" fill="#DB00FF" class="chart-indicator" />
-    </svg>`;
+    </svg>
+    <p class="date-range">
+      <span class="start-date"></span>
+      <span class="end-date"></span>
+    </p>`;
 
     const $script = document.createElement('div');
     $script.className = 'script';
     $script.innerHTML = html;
-    setElementText($script, 'h2', data.name);
+    setElementText(
+      $script,
+      '.start-date',
+      formatDate(new Date(data.metrics[0].retrieved))
+    );
+    setElementText(
+      $script,
+      '.end-date',
+      formatDate(new Date(data.metrics[data.metrics.length - 1].retrieved))
+    );
 
     populateMetadata($script, data.metrics[data.metrics.length - 1]);
 

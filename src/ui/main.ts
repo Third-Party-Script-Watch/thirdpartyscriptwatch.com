@@ -3,7 +3,8 @@ const $output = document.getElementById('output');
 if ($output !== null) {
   const dataUrl = 'https://data.thirdpartyscriptwatch.com/data/metrics-30.json';
   // For local testing against Azure Storage Emulator:
-  // const dataUrl = 'http://127.0.0.1:10000/devstoreaccount1/data/metrics-30.json';
+  // const dataUrl =
+  //   'http://127.0.0.1:10000/devstoreaccount1/data/metrics-30.json';
 
   setTimeout(() => {
     document.body.classList.add('loading');
@@ -39,11 +40,11 @@ if ($output !== null) {
 
   function fillEmpty(data) {
     if (data.length > 0) {
-      const startDate = new Date(data[0].retrieved);
+      const startDate = new Date(data[data.length - 1].retrieved);
       data = data.reverse();
       while (data.length < 30) {
         const date = new Date(startDate);
-        date.setDate(startDate.getDate() - data.length + 1);
+        date.setDate(startDate.getDate() - data.length);
         data.push({
           retrieved: `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()

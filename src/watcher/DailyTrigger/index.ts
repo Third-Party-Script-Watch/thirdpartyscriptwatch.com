@@ -104,8 +104,6 @@ async function getMetrics(): Promise<ScriptMetric[]> {
 
   const browser = await launch();
   const context = await browser.createIncognitoBrowserContext();
-  const page = await context.newPage();
-  await page.setCacheEnabled(false);
 
   const retrieved = new Date();
   retrieved.setHours(0);
@@ -114,6 +112,9 @@ async function getMetrics(): Promise<ScriptMetric[]> {
   retrieved.setMilliseconds(0);
 
   for (let i = 0; i < scripts.length; i++) {
+    const page = await context.newPage();
+    await page.setCacheEnabled(false);
+
     const script = scripts[i];
 
     page.on('requestfinished', async (req) => {

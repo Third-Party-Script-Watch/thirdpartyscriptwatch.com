@@ -40,29 +40,18 @@ p {
 
 .script p {
   margin: 0 0 4px;
+
+  strong {
+    font-weight: 400;
+  }
 }
 
 .chart {
   width: 300px;
   height: 104px;
-  padding: 16px 0;
   margin: 12px 0 32px;
-  border-left: 1px dotted #555;
-  border-bottom: 1px dotted #555;
-}
-
-.metrics {
-  display: none;
-  position: absolute;
-  top: 32px;
-  left: 32px;
-  width: 120px;
-  padding: 8px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #e3e3e3;
-  font-size: 12px;
-  border-radius: 4px;
-  text-align: left;
+  border-left: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
 footer {

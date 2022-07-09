@@ -46,7 +46,7 @@ const timerTrigger: AzureFunction = async function (
         .filter((x) => x.scriptId === script.id)
         .forEach((x) => {
           x.script = script._id;
-          x.scriptId = undefined;
+          delete x.scriptId;
         });
     }
 

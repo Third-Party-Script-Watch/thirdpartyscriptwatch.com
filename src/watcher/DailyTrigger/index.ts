@@ -127,7 +127,7 @@ async function getMetrics(): Promise<ScriptMetric[]> {
           scriptId: script.id,
           retrieved,
           url: response.url(),
-          isInitialRequest: response.url().startsWith(script.url),
+          isInitialRequest: script.url.startsWith(response.url()),
           contentType: headers['content-type'],
           contentEncoding: headers['content-encoding'],
           contentLength: parseInt(headers['content-length'], 10),

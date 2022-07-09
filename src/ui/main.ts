@@ -187,6 +187,7 @@ if ($output !== null) {
     const $script = document.createElement('div');
     $script.className = 'script';
     $script.innerHTML = html;
+    setElementText($script, 'h2', data.name);
     setElementText(
       $script,
       '.start-date',

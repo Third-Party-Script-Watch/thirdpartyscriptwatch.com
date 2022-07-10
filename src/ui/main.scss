@@ -110,14 +110,33 @@ p {
 
     a:link,
     a:visited {
+      display: flex;
+      position: relative;
+      padding-right: 32px;
       color: #111;
       text-decoration: none;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url(./node_modules/@material-design-icons/svg/round/link.svg);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
     }
 
     a:hover,
     a:active {
       color: #111;
       text-decoration: underline;
+      &::after {
+        opacity: 0.3;
+      }
     }
   }
 

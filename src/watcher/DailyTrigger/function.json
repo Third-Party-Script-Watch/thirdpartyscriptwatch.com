@@ -1,0 +1,17 @@
+{
+  "bindings": [
+    {
+      "name": "myTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 0 0 * * *"
+    },
+    {
+      "name": "dataOutput",
+      "type": "blob",
+      "path": "data/metrics-30.json",
+      "direction": "out"
+    }
+  ],
+  "scriptFile": "../dist/DailyTrigger/index.js"
+}

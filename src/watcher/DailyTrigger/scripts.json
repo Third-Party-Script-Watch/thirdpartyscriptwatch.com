@@ -1,0 +1,38 @@
+[
+  {
+    "id": "google-analytics",
+    "name": "Google Analytics (GA4)",
+    "url": "https://www.googletagmanager.com/gtag/js?id=G-LV4FGK973D",
+    "initialisationHtml": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-LV4FGK973D\"></script>\n<script>\nwindow.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\n\ngtag('config', 'G-LV4FGK973D');\n</script>"
+  },
+  {
+    "id": "google-maps",
+    "name": "Google Maps",
+    "url": "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly",
+    "initialisationHtml": "<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly\" defer></script>"
+  },
+  {
+    "id": "google-maps-geometry",
+    "name": "Google Maps (+ Geometry library)",
+    "url": "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&libraries=geometry",
+    "initialisationHtml": "<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&libraries=geometry\" defer></script>"
+  },
+  {
+    "id": "twitter-embed",
+    "name": "Twitter Embed",
+    "url": "https://platform.twitter.com/widgets.js",
+    "initialisationHtml": "<blockquote class=\"twitter-tweet\"><p lang=\"en\" dir=\"ltr\"><a href=\"https://t.co/PHSo3giusZ\">https://t.co/PHSo3giusZ</a> would be neat. Just a page with all the common trackers and graphs of their size over time. Although this human based Twitter version is pretty neat too.</p>&mdash; Tim Lucas (@toolmantim) <a href=\"https://twitter.com/toolmantim/status/1544169316933062656?ref_src=twsrc%5Etfw\">July 5, 2022</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>"
+  },
+  {
+    "id": "facebook-embed",
+    "name": "Facebook Embed",
+    "url": "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v14.0",
+    "initialisationHtml": "<div id=\"fb-root\"></div><script async defer crossorigin=\"anonymous\" src=\"https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v14.0\" nonce=\"EbOXk1DO\"></script>  <div class=\"fb-post\" data-href=\"https://www.facebook.com/20531316728/posts/10154009990506729/\" data-width=\"500\"></div>"
+  },
+  {
+    "id": "youtube-embed",
+    "name": "YouTube Embed",
+    "url": "https://www.youtube.com/embed/H0XScE08hy8",
+    "initialisationHtml": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/H0XScE08hy8\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
+  }
+]

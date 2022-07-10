@@ -1,0 +1,22 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "",
+  "source": "index.html",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.6.2",
+    "parcel": "^2.6.2",
+    "parcel-reporter-static-files-copy": "^1.3.4"
+  }
+}

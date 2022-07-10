@@ -29,6 +29,7 @@ if ($output !== null) {
         const $el = createScript(script);
         $output.appendChild($el);
       });
+      scrollToAnchorlink();
     });
 
   function groupSubresources(metrics: any[]): any[] {
@@ -196,7 +197,14 @@ if ($output !== null) {
     $script.className = 'script';
     $script.id = 'script_' + data.id;
     $script.innerHTML = html;
-    setElementText($script, 'h2', data.name);
+
+    if ($script !== null) {
+      const $innerEl = $script.querySelector<HTMLElement>('h2');
+      if ($innerEl !== null) {
+        $innerEl.innerHTML = `<a href="#${$script.id}">${data.name}</a>`;
+      }
+    }
+
     setElementText(
       $script,
       '.start-date',
@@ -295,6 +303,20 @@ if ($output !== null) {
         $innerEl.title = text;
       }
     }
+  }
+}
+
+function scrollToAnchorlink() {
+  if (window.location.hash && window.location.hash.startsWith('#script_')) {
+    setTimeout(() => {
+      const $script = document.querySelector(window.location.hash);
+      if ($script !== null) {
+        $script.classList.add('target');
+        $script.scrollIntoView({
+          behavior: 'smooth',
+        });
+      }
+    }, 100);
   }
 }
 

@@ -169,6 +169,14 @@ p {
   }
 }
 
+.chart-wrapper {
+  width: 300px;
+
+  @media (min-width: 1024px) {
+    width: 400px;
+  }
+}
+
 .chart {
   width: 300px;
   height: 104px;

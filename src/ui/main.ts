@@ -304,9 +304,31 @@ function onHeaderClick() {
 
 document.querySelector('header')?.addEventListener('click', onHeaderClick);
 
+let introClickCount = 0;
+let introClickCounter;
+
+function onIntroClick() {
+  introClickCount++;
+  if (introClickCounter !== undefined) {
+    window.clearTimeout(introClickCounter);
+  }
+  introClickCounter = window.setTimeout(() => {
+    introClickCount = 0;
+  }, 300);
+
+  if (introClickCount === 3) {
+    document.body.classList.toggle('party');
+  }
+}
+
+document.querySelector('.intro')?.addEventListener('click', onIntroClick);
+
 (async () => {
   KeyTrigger.delay = 5000;
   KeyTrigger.listenFor('528491').then(() => {
     document.body.classList.toggle('inception');
+  });
+  KeyTrigger.listenFor('party').then(() => {
+    document.body.classList.toggle('party');
   });
 })();

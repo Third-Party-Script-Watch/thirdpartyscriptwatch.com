@@ -1,5 +1,12 @@
 # TPSW CHEAT CODES
 
+## PARTY MODE
+
+```$
+$('.intro').on('tripleclick')
+$(window).on('kb:party')
+```
+
 ## INCEPTION MODE
 
 Tap your head 5 times, or enter code

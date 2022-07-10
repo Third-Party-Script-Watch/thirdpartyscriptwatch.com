@@ -174,21 +174,23 @@ if ($output !== null) {
   function createScript(data) {
     const html = `<h2></h2>
     <div class="metadata"></div>
-    <svg viewBox="0 0 300 104" class="chart">
-      <polyline
-        class="chart-line"
-        fill="none"
-        stroke="#0074d9"
-        stroke-width="1"
-        points=""
-      />
-      <line x1="-16" y1="1" x2="-16" y2="104" stroke="#CCCCCC" class="chart-indicator-line"/>
-      <circle cx="-16" cy="-16" r="2" fill="#DB00FF" class="chart-indicator" />
-    </svg>
-    <p class="date-range">
-      <span class="start-date"></span>
-      <span class="end-date"></span>
-    </p>`;
+    <div class="chart-wrapper">
+      <svg viewBox="0 0 300 104" class="chart">
+        <polyline
+          class="chart-line"
+          fill="none"
+          stroke="#0074d9"
+          stroke-width="1"
+          points=""
+        />
+        <line x1="-16" y1="1" x2="-16" y2="104" stroke="#CCCCCC" class="chart-indicator-line"/>
+        <circle cx="-16" cy="-16" r="2" fill="#DB00FF" class="chart-indicator" />
+      </svg>
+      <p class="date-range">
+        <span class="start-date"></span>
+        <span class="end-date"></span>
+      </p>
+    </div>`;
 
     const $script = document.createElement('div');
     $script.className = 'script';
@@ -242,7 +244,10 @@ if ($output !== null) {
       $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
 
       $chart.addEventListener('mousemove', (x) => {
-        const index = Math.round(x.offsetX / 10);
+        const br = $chart.getBoundingClientRect();
+        const indexMultiplier = br.width / 30;
+
+        const index = Math.round(x.offsetX / indexMultiplier);
         if (metrics[index]) {
           populateMetadata($script, metrics[index]);
           $chartIndicator.setAttribute('cx', (index * 10).toString());

@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /humans.txt
+Disallow: /CHEAT_~1.MDK

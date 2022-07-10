@@ -1,0 +1,6 @@
+# Third Party Script Watch v1.0.0
+
+## People
+
+* Lindsay Evans (@lindsayevans) - designer, developer, cloud infrastructure setter-upperer
+* Ben Schwarz (@benschwarz) & Tim Lucas (@toolmantim) - orignal idea

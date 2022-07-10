@@ -55,6 +55,20 @@ p {
   font-weight: 300;
 }
 
+#script___inception {
+  display: none;
+}
+
+.inception {
+  .script {
+    display: none;
+  }
+
+  #script___inception {
+    display: block;
+  }
+}
+
 .script {
   margin-bottom: 32px;
 

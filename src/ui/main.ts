@@ -1,3 +1,5 @@
+import { KeyTrigger } from './key-trigger';
+
 const $output = document.getElementById('output');
 
 if ($output !== null) {
@@ -13,7 +15,9 @@ if ($output !== null) {
   fetch(dataUrl)
     .then((response) => response.json())
     .then((data) => {
-      document.body.classList.remove('loading');
+      setTimeout(() => {
+        document.body.classList.remove('loading');
+      }, 300);
       $output.innerHTML = '';
       data.forEach((script) => {
         script.metrics = groupSubresources(script.metrics);
@@ -186,6 +190,7 @@ if ($output !== null) {
 
     const $script = document.createElement('div');
     $script.className = 'script';
+    $script.id = 'script_' + data.id;
     $script.innerHTML = html;
     setElementText($script, 'h2', data.name);
     setElementText(
@@ -279,3 +284,29 @@ if ($output !== null) {
     }
   }
 }
+
+let headerClickCount = 0;
+let headerClickCounter;
+
+function onHeaderClick() {
+  headerClickCount++;
+  if (headerClickCounter !== undefined) {
+    window.clearTimeout(headerClickCounter);
+  }
+  headerClickCounter = window.setTimeout(() => {
+    headerClickCount = 0;
+  }, 300);
+
+  if (headerClickCount === 5) {
+    document.body.classList.toggle('inception');
+  }
+}
+
+document.querySelector('header')?.addEventListener('click', onHeaderClick);
+
+(async () => {
+  KeyTrigger.delay = 5000;
+  KeyTrigger.listenFor('528491').then(() => {
+    document.body.classList.toggle('inception');
+  });
+})();

@@ -1,5 +1,8 @@
 {
   "platform": {
     "apiRuntime": "node:16"
+  },
+  "mimeTypes": {
+    ".MDK": "text/plain"
   }
 }

@@ -98,9 +98,27 @@ p {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
 
+  &:target,
+  &.target {
+    background-color: rgba(#db00ff, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+
   h2 {
     flex: 1 0 100%;
     margin: 0 0 8px;
+
+    a:link,
+    a:visited {
+      color: #111;
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+      color: #111;
+      text-decoration: underline;
+    }
   }
 
   p {

@@ -13,10 +13,13 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.2",
     "parcel": "^2.6.2",
     "parcel-reporter-static-files-copy": "^1.3.4"
+  },
+  "dependencies": {
+    "@material-design-icons/svg": "^0.11.4"
   }
 }

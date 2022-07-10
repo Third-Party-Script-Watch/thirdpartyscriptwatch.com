@@ -1,0 +1,35 @@
+name: Script request
+description: Suggest a ne wthird-party script to watch
+title: '[Script request]: '
+labels: ['scrip-request']
+assignees:
+  - lindsayevans
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Script name
+      description: A human readable name for the script
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: The initial request URL
+    validations:
+      required: true
+  - type: textarea
+    id: initialisationHtml
+    attributes:
+      label: HTML
+      description: The HTML code required to run the script
+    validations:
+      required: true
+  - type: textarea
+    id: comments
+    attributes:
+      label: Comments
+      description: Any other details you feel like adding - rationale, etc.
+    validations:
+      required: false

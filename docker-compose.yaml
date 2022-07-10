@@ -12,3 +12,9 @@ services:
             - ${PWD}/container-config/mongo/initdb/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
         ports:
             - 27017:27017
+    tpsw-storage:
+        image: mcr.microsoft.com/azure-storage/azurite
+        restart: always
+        command: azurite-blob --blobHost 0.0.0.0 --blobPort 10000
+        ports:
+            - 10000:10000

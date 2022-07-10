@@ -42,10 +42,16 @@ h1 {
 }
 
 .intro {
-  margin: 4px 0 48px;
-  padding: 16px;
-  font-size: 18px;
+  margin: 4px 0 16px;
+  padding: 8px;
+  font-size: 16px;
   font-weight: 300;
+
+  @media (min-width: 1024px) {
+    margin: 4px 0 32px;
+    padding: 16px;
+    font-size: 18px;
+  }
 }
 
 h2 {
@@ -84,10 +90,54 @@ p {
 
 .script {
   padding: 16px;
-  margin-bottom: 32px;
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    background-color: rgba(#fff, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  &:target,
+  &.target {
+    background-color: rgba(#db00ff, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
 
   h2 {
+    flex: 1 0 100%;
     margin: 0 0 8px;
+
+    a:link,
+    a:visited {
+      display: flex;
+      position: relative;
+      padding-right: 32px;
+      color: #111;
+      text-decoration: none;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url(./node_modules/@material-design-icons/svg/round/link.svg);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+    }
+
+    a:hover,
+    a:active {
+      color: #111;
+      text-decoration: underline;
+      &::after {
+        opacity: 0.3;
+      }
+    }
   }
 
   p {
@@ -101,9 +151,29 @@ p {
   .date-range {
     display: flex;
     justify-content: space-between;
-    width: 300px;
+    width: 100%;
     margin: 0;
     font-size: 10px;
+  }
+
+  @media (min-width: 1024px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 650px;
+
+    h2 {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.chart-wrapper {
+  width: 300px;
+
+  @media (min-width: 1024px) {
+    width: 400px;
   }
 }
 
@@ -113,6 +183,13 @@ p {
   margin-top: 12px;
   border-left: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  cursor: crosshair;
+
+  @media (min-width: 1024px) {
+    width: 400px;
+    height: 139px;
+    margin-top: 8px;
+  }
 }
 
 footer {

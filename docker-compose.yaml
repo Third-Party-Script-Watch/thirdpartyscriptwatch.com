@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    tpsw-db:
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: myPasSw0Rd123
+            MONGO_INITDB_DATABASE: tpsw
+        volumes:
+            - ${PWD}/container-config/mongo/initdb/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+        ports:
+            - 27017:27017

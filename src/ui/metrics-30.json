@@ -1,0 +1,397 @@
+[
+  {
+    "id": "google-analytics",
+    "name": "Google Analytics (GA4)",
+    "url": "https://www.googletagmanager.com/gtag/js?id=G-LV4FGK973D",
+    "metrics": [
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://www.googletagmanager.com/gtag/js?id=G-LV4FGK973D",
+        "isInitialRequest": true,
+        "contentType": "application/javascript; charset=UTF-8",
+        "contentEncoding": "br",
+        "contentLength": 71062,
+        "contentLengthUncompressed": 200457
+      }
+    ]
+  },
+  {
+    "id": "google-maps",
+    "name": "Google Maps",
+    "url": "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly",
+    "metrics": [
+      {
+        "retrieved": "2022-07-06T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps-api-v3/api/js/49/8/util.js",
+        "isInitialRequest": false,
+        "contentType": "text/javascript",
+        "contentEncoding": "gzip",
+        "contentLength": 38610,
+        "contentLengthUncompressed": 159188
+      },
+      {
+        "retrieved": "2022-07-06T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps-api-v3/api/js/49/8/common.js",
+        "isInitialRequest": false,
+        "contentType": "text/javascript",
+        "contentEncoding": "gzip",
+        "contentLength": 48884,
+        "contentLengthUncompressed": 250112
+      },
+      {
+        "retrieved": "2022-07-06T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps/api/mapsjs/gen_204?csp_test=true",
+        "isInitialRequest": false,
+        "contentType": "application/json; charset=UTF-8",
+        "contentEncoding": "gzip",
+        "contentLength": 13,
+        "contentLengthUncompressed": 3
+      },
+      {
+        "retrieved": "2022-07-06T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly",
+        "isInitialRequest": true,
+        "contentType": "text/javascript; charset=UTF-8",
+        "contentEncoding": "gzip",
+        "contentLength": 34085,
+        "contentLengthUncompressed": 165550
+      },
+      {
+        "retrieved": "2022-07-07T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps-api-v3/api/js/49/8/util.js",
+        "isInitialRequest": false,
+        "contentType": "text/javascript",
+        "contentEncoding": "gzip",
+        "contentLength": 48610,
+        "contentLengthUncompressed": 159188
+      },
+      {
+        "retrieved": "2022-07-07T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps-api-v3/api/js/49/8/common.js",
+        "isInitialRequest": false,
+        "contentType": "text/javascript",
+        "contentEncoding": "gzip",
+        "contentLength": 58884,
+        "contentLengthUncompressed": 250112
+      },
+      {
+        "retrieved": "2022-07-07T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps/api/mapsjs/gen_204?csp_test=true",
+        "isInitialRequest": false,
+        "contentType": "application/json; charset=UTF-8",
+        "contentEncoding": "gzip",
+        "contentLength": 13,
+        "contentLengthUncompressed": 3
+      },
+      {
+        "retrieved": "2022-07-07T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly",
+        "isInitialRequest": true,
+        "contentType": "text/javascript; charset=UTF-8",
+        "contentEncoding": "gzip",
+        "contentLength": 44085,
+        "contentLengthUncompressed": 165550
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps-api-v3/api/js/49/8/util.js",
+        "isInitialRequest": false,
+        "contentType": "text/javascript",
+        "contentEncoding": "gzip",
+        "contentLength": 58610,
+        "contentLengthUncompressed": 159188
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps-api-v3/api/js/49/8/common.js",
+        "isInitialRequest": false,
+        "contentType": "text/javascript",
+        "contentEncoding": "gzip",
+        "contentLength": 68884,
+        "contentLengthUncompressed": 250112
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps/api/mapsjs/gen_204?csp_test=true",
+        "isInitialRequest": false,
+        "contentType": "application/json; charset=UTF-8",
+        "contentEncoding": "gzip",
+        "contentLength": 23,
+        "contentLengthUncompressed": 3
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps/api/mapsjs/gen_204?csp_test=true",
+        "isInitialRequest": false,
+        "contentType": "application/json; charset=UTF-8",
+        "contentEncoding": "gzip",
+        "contentLength": 23,
+        "contentLengthUncompressed": 3
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly",
+        "isInitialRequest": true,
+        "contentType": "text/javascript; charset=UTF-8",
+        "contentEncoding": "gzip",
+        "contentLength": 54085,
+        "contentLengthUncompressed": 165550
+      }
+    ]
+  },
+  {
+    "id": "google-maps-geometry",
+    "name": "Google Maps (+ Geometry library)",
+    "url": "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&libraries=geometry",
+    "metrics": [
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps-api-v3/api/js/49/8/util.js",
+        "isInitialRequest": false,
+        "contentType": "text/javascript",
+        "contentEncoding": "gzip",
+        "contentLength": 58610,
+        "contentLengthUncompressed": 159188
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps-api-v3/api/js/49/8/common.js",
+        "isInitialRequest": false,
+        "contentType": "text/javascript",
+        "contentEncoding": "gzip",
+        "contentLength": 68884,
+        "contentLengthUncompressed": 250112
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps/api/mapsjs/gen_204?csp_test=true",
+        "isInitialRequest": false,
+        "contentType": "application/json; charset=UTF-8",
+        "contentEncoding": "gzip",
+        "contentLength": 23,
+        "contentLengthUncompressed": 3
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&libraries=geometry",
+        "isInitialRequest": true,
+        "contentType": "text/javascript; charset=UTF-8",
+        "contentEncoding": "gzip",
+        "contentLength": 56756,
+        "contentLengthUncompressed": 173819
+      }
+    ]
+  },
+  {
+    "id": "twitter-embed",
+    "name": "Twitter Embed",
+    "url": "https://platform.twitter.com/widgets.js",
+    "metrics": [
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://syndication.twitter.com/i/jot?l=%7B%22_category_%22%3A%22tfw_client_event%22%2C%22triggered_on%22%3A1657328552356%2C%22event_namespace%22%3A%7B%22client%22%3A%22tfw%22%2C%22page%22%3A%22tweet%22%2C%22action%22%3A%22FCP%22%2C%22component%22%3A%22performance%22%2C%22section%22%3A%22main%22%7D%2C%22context%22%3A%22horizon%22%2C%22client_version%22%3A%22b45a03c79d4c1%3A1654150928467%22%2C%22dnt%22%3Afalse%2C%22widget_id%22%3A%22twitter-widget-0%22%2C%22widget_origin%22%3A%22about%3Ablank%22%2C%22widget_frame%22%3A%22false%22%2C%22widget_partner%22%3A%22%22%2C%22widget_site_screen_name%22%3A%22%22%2C%22widget_site_user_id%22%3A%22%22%2C%22widget_creator_screen_name%22%3A%22%22%2C%22widget_creator_user_id%22%3A%22%22%2C%22widget_iframe_version%22%3A%22b58a13fac6ae1%3A1656694988201%22%2C%22item_ids%22%3A%5B%221544169316933062656%22%5D%2C%22item_details%22%3A%7B%221544169316933062656%22%3A%7B%22item_type%22%3A0%7D%7D%2C%22duration_ms%22%3A968.8999999761581%7D",
+        "isInitialRequest": false,
+        "contentType": "image/gif;charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 65,
+        "contentLengthUncompressed": 43
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://syndication.twitter.com/i/jot?l=%7B%22_category_%22%3A%22tfw_client_event%22%2C%22triggered_on%22%3A1657328552341%2C%22event_namespace%22%3A%7B%22client%22%3A%22tfw%22%2C%22page%22%3A%22tweet%22%2C%22action%22%3A%22impression%22%2C%22section%22%3A%22main%22%7D%2C%22context%22%3A%22horizon%22%2C%22client_version%22%3A%22b45a03c79d4c1%3A1654150928467%22%2C%22dnt%22%3Afalse%2C%22widget_id%22%3A%22twitter-widget-0%22%2C%22widget_origin%22%3A%22about%3Ablank%22%2C%22widget_frame%22%3A%22false%22%2C%22widget_partner%22%3A%22%22%2C%22widget_site_screen_name%22%3A%22%22%2C%22widget_site_user_id%22%3A%22%22%2C%22widget_creator_screen_name%22%3A%22%22%2C%22widget_creator_user_id%22%3A%22%22%2C%22widget_iframe_version%22%3A%22b58a13fac6ae1%3A1656694988201%22%2C%22item_ids%22%3A%5B%221544169316933062656%22%5D%2C%22item_details%22%3A%7B%221544169316933062656%22%3A%7B%22item_type%22%3A0%7D%7D%7D",
+        "isInitialRequest": false,
+        "contentType": "image/gif;charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 65,
+        "contentLengthUncompressed": 43
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://syndication.twitter.com/i/jot?l=%7B%22_category_%22%3A%22tfw_client_event%22%2C%22triggered_on%22%3A1657328552329%2C%22event_namespace%22%3A%7B%22client%22%3A%22tfw%22%2C%22page%22%3A%22tweet%22%2C%22action%22%3A%22seen%22%2C%22section%22%3A%22main%22%2C%22component%22%3A%22privacy-notice%22%7D%2C%22context%22%3A%22horizon%22%2C%22client_version%22%3A%22b45a03c79d4c1%3A1654150928467%22%2C%22dnt%22%3Afalse%2C%22widget_id%22%3A%22twitter-widget-0%22%2C%22widget_origin%22%3A%22about%3Ablank%22%2C%22widget_frame%22%3A%22false%22%2C%22widget_partner%22%3A%22%22%2C%22widget_site_screen_name%22%3A%22%22%2C%22widget_site_user_id%22%3A%22%22%2C%22widget_creator_screen_name%22%3A%22%22%2C%22widget_creator_user_id%22%3A%22%22%2C%22widget_iframe_version%22%3A%22b58a13fac6ae1%3A1656694988201%22%2C%22item_ids%22%3A%5B%221544169316933062656%22%5D%2C%22item_details%22%3A%7B%221544169316933062656%22%3A%7B%22item_type%22%3A0%7D%7D%7D",
+        "isInitialRequest": false,
+        "contentType": "image/gif;charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 65,
+        "contentLengthUncompressed": 43
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://abs-0.twimg.com/emoji/v2/svg/1f62e-200d-1f4a8.svg",
+        "isInitialRequest": false,
+        "contentType": "image/svg+xml",
+        "contentEncoding": "gzip",
+        "contentLength": 1022,
+        "contentLengthUncompressed": 2074
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://syndication.twitter.com/i/jot?l=%7B%22_category_%22%3A%22tfw_client_event%22%2C%22triggered_on%22%3A1657328552152%2C%22event_namespace%22%3A%7B%22client%22%3A%22tfw%22%2C%22page%22%3A%22tweet%22%2C%22action%22%3A%22results%22%2C%22section%22%3A%22main%22%7D%2C%22context%22%3A%22horizon%22%2C%22client_version%22%3A%22b45a03c79d4c1%3A1654150928467%22%2C%22dnt%22%3Afalse%2C%22widget_id%22%3A%22twitter-widget-0%22%2C%22widget_origin%22%3A%22about%3Ablank%22%2C%22widget_frame%22%3A%22false%22%2C%22widget_partner%22%3A%22%22%2C%22widget_site_screen_name%22%3A%22%22%2C%22widget_site_user_id%22%3A%22%22%2C%22widget_creator_screen_name%22%3A%22%22%2C%22widget_creator_user_id%22%3A%22%22%2C%22widget_iframe_version%22%3A%22b58a13fac6ae1%3A1656694988201%22%2C%22item_ids%22%3A%5B%221544169316933062656%22%5D%2C%22item_details%22%3A%7B%221544169316933062656%22%3A%7B%22item_type%22%3A0%7D%7D%7D",
+        "isInitialRequest": false,
+        "contentType": "image/gif;charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 65,
+        "contentLengthUncompressed": 43
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://pbs.twimg.com/profile_images/1359731512212561920/W-_bVCH8_normal.jpg",
+        "isInitialRequest": false,
+        "contentType": "image/jpeg",
+        "contentEncoding": null,
+        "contentLength": 1959,
+        "contentLengthUncompressed": 1959
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://pbs.twimg.com/profile_images/1429754830591979522/q3tTJtib_normal.jpg",
+        "isInitialRequest": false,
+        "contentType": "image/jpeg",
+        "contentEncoding": null,
+        "contentLength": 2263,
+        "contentLengthUncompressed": 2263
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://cdn.syndication.twimg.com/tweet-result?id=1544169316933062656&lang=en",
+        "isInitialRequest": false,
+        "contentType": "application/json; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": null,
+        "contentLengthUncompressed": 1928
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/embed.ondemand.Dropdown.2591641f5e66f4941af4.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 2211,
+        "contentLengthUncompressed": 5543
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/embed.vendors~ondemand.Tweet.618716ac3ce413edf13d.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 184945,
+        "contentLengthUncompressed": 674225
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/embed.ondemand.Tweet.284866466228efe62763.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 17714,
+        "contentLengthUncompressed": 81884
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/embed.vendors~ondemand.horizon-web.i18n.en-js.faa0ac75c35ed12cb7c1.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 11291,
+        "contentLengthUncompressed": 36134
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/embed.ondemand.i18n.en-js.d61db963ee91797d53b7.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 1288,
+        "contentLengthUncompressed": 3118
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/embed.vendors~ondemand.horizon-web.i18n.ar-js~ondemand.horizon-web.i18n.ar-x-fm-js~ondemand.horizon-web.i1~98d47477.ee8d9301eaeed83932c3.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 6794,
+        "contentLengthUncompressed": 20169
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/embed.modules.cfee4b331d0f780ab748.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 164776,
+        "contentLengthUncompressed": 506108
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/embed.Tweet.045a11cf6fab3519a120.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 6036,
+        "contentLengthUncompressed": 16226
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/embed.runtime.98eb02c4936ded6ea33d.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 3365,
+        "contentLengthUncompressed": 8327
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/embed/Tweet.html?dnt=false&embedId=twitter-widget-0&features=e30%3D&frame=false&hideCard=false&hideThread=false&id=1544169316933062656&lang=en&origin=about%3Ablank&theme=light&widgetsVersion=b45a03c79d4c1%3A1654150928467&width=550px",
+        "isInitialRequest": false,
+        "contentType": "text/html; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 240,
+        "contentLengthUncompressed": 406
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/js/tweet.45758a9d6fd14fe4ebd62b2170932592.js",
+        "isInitialRequest": false,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 2690,
+        "contentLengthUncompressed": 7947
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://platform.twitter.com/widgets.js",
+        "isInitialRequest": true,
+        "contentType": "application/javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 29459,
+        "contentLengthUncompressed": 99370
+      }
+    ]
+  },
+  {
+    "id": "facebook-embed",
+    "name": "Facebook Embed",
+    "url": "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v14.0",
+    "metrics": [
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://connect.facebook.net/en_GB/sdk.js?hash=682532898b6a9708ed22bd35d653c8f8",
+        "isInitialRequest": false,
+        "contentType": "application/x-javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 87423,
+        "contentLengthUncompressed": 306456
+      },
+      {
+        "retrieved": "2022-07-08T14:00:00.000Z",
+        "url": "https://connect.facebook.net/en_GB/sdk.js",
+        "isInitialRequest": true,
+        "contentType": "application/x-javascript; charset=utf-8",
+        "contentEncoding": "gzip",
+        "contentLength": 1688,
+        "contentLengthUncompressed": 3097
+      }
+    ]
+  }
+]

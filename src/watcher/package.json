@@ -1,0 +1,25 @@
+{
+  "name": "watcher",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "hpack": "^1.0.0",
+    "mongodb": "^4.7.0",
+    "puppeteer": "^15.3.2"
+  },
+  "devDependencies": {
+    "@azure/functions": "^3.0.0",
+    "@types/node": "16.x",
+    "typescript": "^4.0.0"
+  }
+}

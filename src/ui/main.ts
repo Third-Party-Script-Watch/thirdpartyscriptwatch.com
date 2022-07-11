@@ -124,6 +124,34 @@ if ($output !== null) {
     return `${Math.round(bytes / 1024)} KiB`;
   }
 
+  function getSubresourcesTable(subresources) {
+    let html = `<table>
+    <thead>
+      <tr>
+        <th>Size</th>
+        <th><abbr title="Encoding">Enc.</abbr></th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+`;
+
+    subresources.forEach((metric) => {
+      html += `<tr><th colspan="3"><pre class="url">${
+        metric.url
+      }</pre></th></tr>
+  <tr>
+    <td>${formatSize(metric.contentLength)}</td>
+    <td>${metric.contentEncoding ? metric.contentEncoding : '-'}</td>
+    <td>${metric.contentType ? metric.contentType.split(';')[0] : '-'}</td>
+  </tr>`;
+    });
+
+    html += '</tbody></table>';
+
+    return html;
+  }
+
   function populateMetadata($script, metric, scriptData) {
     const dt = new Date(metric.retrieved);
     const subresources = metric.subresources;
@@ -145,7 +173,7 @@ if ($output !== null) {
           <strong>Initialisation HTML:</strong>
           <pre class="initialisation-html"></pre>
         </details>
-        <p><strong class="subresources-label"></strong> <span class="subresources-size"></span></p>`;
+        `;
 
       const contentLength = metric.contentLength;
       const subresourcesSize = subresources
@@ -156,14 +184,36 @@ if ($output !== null) {
 
       const $url = $script.querySelector('.url');
       if ($url) {
-        $url.innerText = scriptData?.url;
+        $url.innerText = scriptData.url;
       }
 
       const $initialisationHtml = $script.querySelector('.initialisation-html');
-      if ($initialisationHtml) {
-        $initialisationHtml.innerText = scriptData?.initialisationHtml
+      if ($initialisationHtml && scriptData.initialisationHtml !== undefined) {
+        $initialisationHtml.innerText = scriptData.initialisationHtml
           .replace(/\\n/g, `\n`)
           .replace(/\\"/g, `"`);
+      }
+
+      const $subresourcesWrapper = document.createElement('div');
+      const subresourcesHtml =
+        metric.subresources.length > 0
+          ? `<details class="subresources">
+          <summary><strong class="subresources-label"></strong> <span class="subresources-size"></span></summary>
+        </details>`
+          : `<p>
+          <strong class="subresources-label"></strong> <span class="subresources-size"></span>
+        </p>`;
+
+      $subresourcesWrapper.innerHTML = subresourcesHtml;
+      $script.querySelector('.metadata').appendChild($subresourcesWrapper);
+
+      const $subresources = $script.querySelector('.subresources');
+      if ($subresources && metric.subresources.length > 0) {
+        const $subresourcesTable = document.createElement('div');
+        $subresourcesTable.innerHTML = getSubresourcesTable(
+          metric.subresources
+        );
+        $subresources.appendChild($subresourcesTable);
       }
 
       setElementText($script, '.retrieved', formatDate(dt) + ' (UTC)');

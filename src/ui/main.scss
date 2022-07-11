@@ -212,6 +212,47 @@ p {
         max-width: 224px;
       }
     }
+
+    table {
+      width: 100%;
+      border-spacing: 0;
+
+      thead {
+        th {
+          padding-right: 8px;
+          font-size: 14px;
+          font-weight: 500;
+          text-align: left;
+
+          &:last-of-type {
+            padding-right: 0;
+          }
+        }
+      }
+
+      tbody {
+        th {
+          font-weight: normal;
+        }
+
+        td {
+          padding-right: 8px;
+          font-size: 14px;
+          max-width: 100px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          &:last-of-type {
+            padding-right: 0;
+          }
+        }
+
+        pre {
+          margin: 4px 0 0;
+        }
+      }
+    }
   }
 
   .date-range {

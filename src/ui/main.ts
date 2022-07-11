@@ -34,6 +34,18 @@ if ($output !== null) {
         $output.appendChild($el);
       });
       scrollToAnchorlink();
+      attachFilterHandlers();
+
+      const params = new URLSearchParams(document.location.search);
+      if (params !== undefined) {
+        const keywords = params.get('q');
+
+        if (keywords !== null) {
+          const $keywords = document.getElementById('q') as HTMLInputElement;
+          $keywords.value = keywords;
+          filterScripts(keywords);
+        }
+      }
     });
 
   function groupSubresources(metrics: any[]): any[] {
@@ -124,7 +136,35 @@ if ($output !== null) {
     return `${Math.round(bytes / 1024)} KiB`;
   }
 
-  function populateMetadata($script, metric) {
+  function getSubresourcesTable(subresources) {
+    let html = `<table>
+    <thead>
+      <tr>
+        <th>Size</th>
+        <th><abbr title="Encoding">Enc.</abbr></th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+`;
+
+    subresources.forEach((metric) => {
+      html += `<tr><th colspan="3"><pre class="url">${
+        metric.url
+      }</pre></th></tr>
+  <tr>
+    <td>${formatSize(metric.contentLength)}</td>
+    <td>${metric.contentEncoding ? metric.contentEncoding : '-'}</td>
+    <td>${metric.contentType ? metric.contentType.split(';')[0] : '-'}</td>
+  </tr>`;
+    });
+
+    html += '</tbody></table>';
+
+    return html;
+  }
+
+  function populateMetadata($script, metric, scriptData) {
     const dt = new Date(metric.retrieved);
     const subresources = metric.subresources;
 
@@ -138,8 +178,14 @@ if ($output !== null) {
     } else {
       const html = `
         <p><strong>Date:</strong> <span class="retrieved"></span></p>
-        <p><strong>Initial script:</strong> <span class="size"></span></p>
-        <p><strong class="subresources-label"></strong> <span class="subresources-size"></span></p>`;
+        <details>
+          <summary><strong>Initial script:</strong> <span class="size"></span></summary>
+          <strong>URL:</strong>
+          <pre class="url"></pre>
+          <strong>Initialisation HTML:</strong>
+          <pre class="initialisation-html"></pre>
+        </details>
+        `;
 
       const contentLength = metric.contentLength;
       const subresourcesSize = subresources
@@ -147,6 +193,40 @@ if ($output !== null) {
         .reduce((a, b) => a + b, 0);
 
       $script.querySelector('.metadata').innerHTML = html;
+
+      const $url = $script.querySelector('.url');
+      if ($url) {
+        $url.innerText = scriptData.url;
+      }
+
+      const $initialisationHtml = $script.querySelector('.initialisation-html');
+      if ($initialisationHtml && scriptData.initialisationHtml !== undefined) {
+        $initialisationHtml.innerText = scriptData.initialisationHtml
+          .replace(/\\n/g, `\n`)
+          .replace(/\\"/g, `"`);
+      }
+
+      const $subresourcesWrapper = document.createElement('div');
+      const subresourcesHtml =
+        metric.subresources.length > 0
+          ? `<details class="subresources">
+          <summary><strong class="subresources-label"></strong> <span class="subresources-size"></span></summary>
+        </details>`
+          : `<p>
+          <strong class="subresources-label"></strong> <span class="subresources-size"></span>
+        </p>`;
+
+      $subresourcesWrapper.innerHTML = subresourcesHtml;
+      $script.querySelector('.metadata').appendChild($subresourcesWrapper);
+
+      const $subresources = $script.querySelector('.subresources');
+      if ($subresources && metric.subresources.length > 0) {
+        const $subresourcesTable = document.createElement('div');
+        $subresourcesTable.innerHTML = getSubresourcesTable(
+          metric.subresources
+        );
+        $subresources.appendChild($subresourcesTable);
+      }
 
       setElementText($script, '.retrieved', formatDate(dt) + ' (UTC)');
       setElementText($script, '.size', formatSize(contentLength));
@@ -177,7 +257,7 @@ if ($output !== null) {
   }
 
   function createScript(data) {
-    const html = `<h2></h2>
+    const html = `<h3></h3>
     <div class="metadata"></div>
     <div class="chart-wrapper">
       <svg viewBox="0 0 300 104" class="chart">
@@ -203,9 +283,14 @@ if ($output !== null) {
     $script.innerHTML = html;
 
     if ($script !== null) {
-      const $innerEl = $script.querySelector<HTMLElement>('h2');
+      const $innerEl = $script.querySelector<HTMLElement>('h3');
       if ($innerEl !== null) {
-        $innerEl.innerHTML = `<a href="#${$script.id}">${data.name}</a>`;
+        $innerEl.innerHTML = `<a href="#${
+          $script.id
+        }"><span>${data.name.replace(
+          /\(([^\)]*)\)/g,
+          '<span>$1</span>'
+        )}</span></a>`;
       }
     }
 
@@ -220,7 +305,7 @@ if ($output !== null) {
       formatDate(new Date(data.metrics[data.metrics.length - 1].retrieved))
     );
 
-    populateMetadata($script, data.metrics[data.metrics.length - 1]);
+    populateMetadata($script, data.metrics[data.metrics.length - 1], data);
 
     const $chartLine = $script.querySelector('.chart-line');
     const points = generatePoints(data.metrics);
@@ -230,7 +315,7 @@ if ($output !== null) {
 
     const $chart = $script.querySelector<SVGElement>('.chart');
     if ($chart !== null) {
-      attachHandlers($script, $chart, data.metrics, points);
+      attachHandlers($script, $chart, data.metrics, points, data);
     }
 
     return $script;
@@ -240,7 +325,8 @@ if ($output !== null) {
     $script: HTMLElement,
     $chart: SVGElement,
     metrics,
-    points
+    points,
+    scriptData
   ) {
     const $chartIndicator =
       $chart.querySelector<HTMLElement>('.chart-indicator');
@@ -261,7 +347,7 @@ if ($output !== null) {
 
         const index = Math.round(x.offsetX / indexMultiplier);
         if (metrics[index]) {
-          populateMetadata($script, metrics[index]);
+          populateMetadata($script, metrics[index], scriptData);
           $chartIndicator.setAttribute('cx', (index * 10).toString());
           $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
           $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
@@ -273,7 +359,7 @@ if ($output !== null) {
         const x = e.touches[0].clientX - br.left;
         const index = Math.round(x / 10);
         if (metrics[index]) {
-          populateMetadata($script, metrics[index]);
+          populateMetadata($script, metrics[index], scriptData);
           $chartIndicator.setAttribute('cx', (index * 10).toString());
           $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
           $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
@@ -322,6 +408,54 @@ function scrollToAnchorlink() {
       }
     }, 100);
   }
+}
+
+function attachFilterHandlers() {
+  const $keywords = document.getElementById('q') as HTMLInputElement;
+
+  addEventListener('popstate', (e) => {
+    console.log(e);
+  });
+
+  $keywords?.addEventListener('input', (e) => {
+    const keywords = $keywords.value.trim().toLowerCase();
+    filterScripts(keywords);
+    window.history.replaceState(
+      {},
+      document.title,
+      keywords === '' ? window.location.pathname : `?q=${keywords}`
+    );
+  });
+
+  window.addEventListener('popstate', () => {
+    const params = new URLSearchParams(document.location.search);
+    if (params !== undefined) {
+      const keywords = params.get('q');
+
+      if (keywords !== null) {
+        const $keywords = document.getElementById('q') as HTMLInputElement;
+        $keywords.value = keywords;
+        filterScripts(keywords);
+      }
+    }
+  });
+}
+
+function filterScripts(keywords: string) {
+  const $scripts = document.querySelectorAll('.script');
+  $scripts.forEach(($script) => {
+    if (keywords === '') {
+      $script.classList.remove('hidden');
+    } else {
+      const normalisedName = $script
+        .querySelector('h3')
+        ?.innerText.toLowerCase();
+      $script.classList.toggle(
+        'hidden',
+        !(normalisedName && normalisedName.includes(keywords))
+      );
+    }
+  });
 }
 
 let headerClickCount = 0;

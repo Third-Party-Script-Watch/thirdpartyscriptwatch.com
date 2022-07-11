@@ -124,7 +124,7 @@ if ($output !== null) {
     return `${Math.round(bytes / 1024)} KiB`;
   }
 
-  function populateMetadata($script, metric) {
+  function populateMetadata($script, metric, scriptData) {
     const dt = new Date(metric.retrieved);
     const subresources = metric.subresources;
 
@@ -138,7 +138,13 @@ if ($output !== null) {
     } else {
       const html = `
         <p><strong>Date:</strong> <span class="retrieved"></span></p>
-        <p><strong>Initial script:</strong> <span class="size"></span></p>
+        <details>
+          <summary><strong>Initial script:</strong> <span class="size"></span></summary>
+          <strong>URL:</strong>
+          <pre class="url"></pre>
+          <strong>Initialisation HTML:</strong>
+          <pre class="initialisation-html"></pre>
+        </details>
         <p><strong class="subresources-label"></strong> <span class="subresources-size"></span></p>`;
 
       const contentLength = metric.contentLength;
@@ -147,6 +153,18 @@ if ($output !== null) {
         .reduce((a, b) => a + b, 0);
 
       $script.querySelector('.metadata').innerHTML = html;
+
+      const $url = $script.querySelector('.url');
+      if ($url) {
+        $url.innerText = scriptData?.url;
+      }
+
+      const $initialisationHtml = $script.querySelector('.initialisation-html');
+      if ($initialisationHtml) {
+        $initialisationHtml.innerText = scriptData?.initialisationHtml
+          .replace(/\\n/g, `\n`)
+          .replace(/\\"/g, `"`);
+      }
 
       setElementText($script, '.retrieved', formatDate(dt) + ' (UTC)');
       setElementText($script, '.size', formatSize(contentLength));
@@ -225,7 +243,7 @@ if ($output !== null) {
       formatDate(new Date(data.metrics[data.metrics.length - 1].retrieved))
     );
 
-    populateMetadata($script, data.metrics[data.metrics.length - 1]);
+    populateMetadata($script, data.metrics[data.metrics.length - 1], data);
 
     const $chartLine = $script.querySelector('.chart-line');
     const points = generatePoints(data.metrics);
@@ -235,7 +253,7 @@ if ($output !== null) {
 
     const $chart = $script.querySelector<SVGElement>('.chart');
     if ($chart !== null) {
-      attachHandlers($script, $chart, data.metrics, points);
+      attachHandlers($script, $chart, data.metrics, points, data);
     }
 
     return $script;
@@ -245,7 +263,8 @@ if ($output !== null) {
     $script: HTMLElement,
     $chart: SVGElement,
     metrics,
-    points
+    points,
+    scriptData
   ) {
     const $chartIndicator =
       $chart.querySelector<HTMLElement>('.chart-indicator');
@@ -266,7 +285,7 @@ if ($output !== null) {
 
         const index = Math.round(x.offsetX / indexMultiplier);
         if (metrics[index]) {
-          populateMetadata($script, metrics[index]);
+          populateMetadata($script, metrics[index], scriptData);
           $chartIndicator.setAttribute('cx', (index * 10).toString());
           $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
           $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
@@ -278,7 +297,7 @@ if ($output !== null) {
         const x = e.touches[0].clientX - br.left;
         const index = Math.round(x / 10);
         if (metrics[index]) {
-          populateMetadata($script, metrics[index]);
+          populateMetadata($script, metrics[index], scriptData);
           $chartIndicator.setAttribute('cx', (index * 10).toString());
           $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
           $chartIndicatorLine.setAttribute('x1', (index * 10).toString());

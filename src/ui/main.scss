@@ -155,11 +155,62 @@ p {
     }
   }
 
-  p {
+  .metadata {
+    @media (min-width: 1024px) {
+      width: calc(100% - 400px - 16px);
+    }
+  }
+
+  p,
+  details {
     margin: 0 0 4px;
 
     strong {
       font-weight: 400;
+    }
+
+    summary {
+      &::marker,
+      &::-webkit-details-marker {
+        display: none;
+        content: '';
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        width: 18px;
+        height: 18px;
+        float: right;
+        background: url(./node_modules/@material-design-icons/svg/round/expand_more.svg);
+        background-size: 18px;
+        transition: transform 0.15s ease-in-out;
+        transform-origin: 9px;
+      }
+    }
+
+    &[open] summary {
+      margin-bottom: 8px;
+
+      &::after {
+        transform: rotate(-180deg);
+      }
+    }
+
+    pre {
+      width: 100%;
+      max-width: 288px;
+      max-height: 80px;
+      overflow: auto;
+      padding: 4px;
+      margin-top: 4px;
+      background-color: #e3e3e3;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+
+      @media (min-width: 1024px) {
+        max-width: 224px;
+      }
     }
   }
 

@@ -34,6 +34,18 @@ if ($output !== null) {
         $output.appendChild($el);
       });
       scrollToAnchorlink();
+      attachFilterHandlers();
+
+      const params = new URLSearchParams(document.location.search);
+      if (params !== undefined) {
+        const keywords = params.get('q');
+
+        if (keywords !== null) {
+          const $keywords = document.getElementById('q') as HTMLInputElement;
+          $keywords.value = keywords;
+          filterScripts(keywords);
+        }
+      }
     });
 
   function groupSubresources(metrics: any[]): any[] {
@@ -245,7 +257,7 @@ if ($output !== null) {
   }
 
   function createScript(data) {
-    const html = `<h2></h2>
+    const html = `<h3></h3>
     <div class="metadata"></div>
     <div class="chart-wrapper">
       <svg viewBox="0 0 300 104" class="chart">
@@ -271,7 +283,7 @@ if ($output !== null) {
     $script.innerHTML = html;
 
     if ($script !== null) {
-      const $innerEl = $script.querySelector<HTMLElement>('h2');
+      const $innerEl = $script.querySelector<HTMLElement>('h3');
       if ($innerEl !== null) {
         $innerEl.innerHTML = `<a href="#${
           $script.id
@@ -396,6 +408,54 @@ function scrollToAnchorlink() {
       }
     }, 100);
   }
+}
+
+function attachFilterHandlers() {
+  const $keywords = document.getElementById('q') as HTMLInputElement;
+
+  addEventListener('popstate', (e) => {
+    console.log(e);
+  });
+
+  $keywords?.addEventListener('input', (e) => {
+    const keywords = $keywords.value.trim().toLowerCase();
+    filterScripts(keywords);
+    window.history.replaceState(
+      {},
+      document.title,
+      keywords === '' ? window.location.pathname : `?q=${keywords}`
+    );
+  });
+
+  window.addEventListener('popstate', () => {
+    const params = new URLSearchParams(document.location.search);
+    if (params !== undefined) {
+      const keywords = params.get('q');
+
+      if (keywords !== null) {
+        const $keywords = document.getElementById('q') as HTMLInputElement;
+        $keywords.value = keywords;
+        filterScripts(keywords);
+      }
+    }
+  });
+}
+
+function filterScripts(keywords: string) {
+  const $scripts = document.querySelectorAll('.script');
+  $scripts.forEach(($script) => {
+    if (keywords === '') {
+      $script.classList.remove('hidden');
+    } else {
+      const normalisedName = $script
+        .querySelector('h3')
+        ?.innerText.toLowerCase();
+      $script.classList.toggle(
+        'hidden',
+        !(normalisedName && normalisedName.includes(keywords))
+      );
+    }
+  });
 }
 
 let headerClickCount = 0;

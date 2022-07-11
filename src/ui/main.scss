@@ -59,6 +59,12 @@ h1 {
 }
 
 h2 {
+  font-size: 24px;
+  font-weight: 100;
+}
+
+h3 {
+  font-size: 22px;
   font-weight: 100;
 }
 
@@ -98,6 +104,10 @@ p {
   border-radius: 8px;
   transition: all 0.15s ease-in-out;
 
+  &.hidden {
+    display: none;
+  }
+
   &:hover {
     background-color: rgba(#fff, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -109,7 +119,7 @@ p {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
 
-  h2 {
+  h3 {
     flex: 1 0 100%;
     margin: 0 0 8px;
 
@@ -270,7 +280,7 @@ p {
     align-items: center;
     width: 650px;
 
-    h2 {
+    h3 {
       margin-bottom: 0;
     }
   }
@@ -317,4 +327,37 @@ footer ul {
 
 footer li {
   margin-bottom: 4px;
+}
+
+form {
+  width: 300px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 650px;
+    margin-bottom: 0;
+  }
+
+  .filter {
+    label {
+      font-weight: 300;
+    }
+
+    input {
+      padding: 4px;
+      background-color: rgba(#ccc, 0.5);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+
+      &:focus-visible {
+        outline: none;
+        border-color: #666;
+        box-shadow: 0 0 4px 4px rgba(#0074d9, 0.3);
+      }
+    }
+  }
 }

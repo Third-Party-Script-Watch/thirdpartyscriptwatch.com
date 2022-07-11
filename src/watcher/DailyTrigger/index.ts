@@ -40,6 +40,7 @@ const timerTrigger: AzureFunction = async function (
           id: scripts[i].id,
           name: scripts[i].name,
           url: scripts[i].url,
+          initialisationHtml: scripts[i].initialisationHtml,
         });
 
         if (!result.acknowledged) {

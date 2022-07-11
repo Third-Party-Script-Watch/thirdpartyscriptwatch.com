@@ -2,10 +2,14 @@ import { KeyTrigger } from './key-trigger';
 
 const $output = document.getElementById('output');
 
+function getCacheBuster(): string {
+  return '?' + new Date().toISOString().substring(0, 11);
+}
+
 if ($output !== null) {
-  const cacheBuster = `?${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
   const dataUrl =
-    'https://data.thirdpartyscriptwatch.com/data/metrics-30.json' + cacheBuster;
+    'https://data.thirdpartyscriptwatch.com/data/metrics-30.json' +
+    getCacheBuster();
   // For local testing against Azure Storage Emulator:
   // const dataUrl =
   //   'http://127.0.0.1:10000/devstoreaccount1/data/metrics-30.json';

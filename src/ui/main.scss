@@ -27,6 +27,10 @@ a:active {
   color: #db00ff;
 }
 
+::selection {
+  background: rgba(#db00ff, 0.2);
+}
+
 .loading-spinner {
   opacity: 0;
   transition: all 0.3s ease-in-out;
@@ -138,10 +142,12 @@ p {
     }
 
     a:hover,
-    a:active {
+    a:active,
+    a:focus {
       color: #111;
       text-decoration: underline;
       text-decoration-thickness: 1px;
+      outline: none;
 
       &::after {
         opacity: 0.3;

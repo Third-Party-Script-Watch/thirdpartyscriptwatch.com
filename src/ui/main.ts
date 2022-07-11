@@ -205,7 +205,12 @@ if ($output !== null) {
     if ($script !== null) {
       const $innerEl = $script.querySelector<HTMLElement>('h2');
       if ($innerEl !== null) {
-        $innerEl.innerHTML = `<a href="#${$script.id}">${data.name}</a>`;
+        $innerEl.innerHTML = `<a href="#${
+          $script.id
+        }"><span>${data.name.replace(
+          /\(([^\)]*)\)/g,
+          '<span>$1</span>'
+        )}</span></a>`;
       }
     }
 

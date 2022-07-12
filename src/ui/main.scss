@@ -174,12 +174,15 @@ p {
   p,
   details {
     margin: 0 0 4px;
+    font-weight: 300;
 
     strong {
       font-weight: 400;
     }
 
     summary {
+      cursor: default;
+
       &::marker,
       &::-webkit-details-marker {
         display: none;
@@ -217,6 +220,21 @@ p {
       background-color: #e3e3e3;
       border: 1px solid #ccc;
       border-radius: 4px;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(#666, 0.3);
+        border-radius: 2px;
+      }
+
+      &::-webkit-scrollbar-corner {
+        background: transparent;
+      }
 
       @media (min-width: 1024px) {
         max-width: 224px;
@@ -337,9 +355,20 @@ form {
   @media (min-width: 1024px) {
     display: flex;
     justify-content: space-between;
+    column-gap: 16px;
     align-items: center;
     width: 650px;
     margin-bottom: 0;
+  }
+
+  .next-update {
+    margin-bottom: 24px;
+    flex-grow: 1;
+    font-size: 14px;
+
+    @media (min-width: 1024px) {
+      margin-bottom: 6px;
+    }
   }
 
   .filter {

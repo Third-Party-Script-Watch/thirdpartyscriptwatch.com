@@ -174,12 +174,15 @@ p {
   p,
   details {
     margin: 0 0 4px;
+    font-weight: 300;
 
     strong {
       font-weight: 400;
     }
 
     summary {
+      cursor: default;
+
       &::marker,
       &::-webkit-details-marker {
         display: none;

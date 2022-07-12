@@ -315,6 +315,16 @@ if ($output !== null) {
 
     const $chart = $script.querySelector<SVGElement>('.chart');
     if ($chart !== null) {
+      $chart.setAttribute(
+        'title',
+        `Chart showing the size of the ${
+          data.name
+        } script over the period ${formatDate(
+          new Date(data.metrics[0].retrieved)
+        )} to ${formatDate(
+          new Date(data.metrics[data.metrics.length - 1].retrieved)
+        )}`
+      );
       attachHandlers($script, $chart, data.metrics, points, data);
     }
 

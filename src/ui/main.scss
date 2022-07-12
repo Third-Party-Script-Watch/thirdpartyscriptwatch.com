@@ -355,9 +355,16 @@ form {
   @media (min-width: 1024px) {
     display: flex;
     justify-content: space-between;
+    column-gap: 16px;
     align-items: center;
     width: 650px;
     margin-bottom: 0;
+  }
+
+  .next-update {
+    margin-bottom: 6px;
+    flex-grow: 1;
+    font-size: 14px;
   }
 
   .filter {

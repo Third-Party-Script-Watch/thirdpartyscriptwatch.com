@@ -468,6 +468,53 @@ function filterScripts(keywords: string) {
   });
 }
 
+function getRemaining(now: Date, then: Date): string {
+  const seconds = Math.round((then.getTime() - now.getTime()) / 1000);
+  const minutes = Math.round(seconds / 60);
+  let remaining = 'Next update: ';
+
+  if (minutes > 60) {
+    remaining += `${Math.round(minutes / 60)}h, `;
+  }
+  if (seconds > 60) {
+    remaining += `${Math.round(minutes % 60)}m`;
+  }
+  if (seconds <= 60) {
+    remaining += `${seconds}s`;
+    nextUpdateTimer = setInterval(() => {
+      setNextUpdate();
+    }, 1000);
+  }
+
+  return remaining;
+}
+
+function setNextUpdate() {
+  const now = new Date();
+  let nextUpdate = new Date();
+  nextUpdate.setDate(nextUpdate.getDate() + 1);
+  nextUpdate = new Date(
+    Date.UTC(
+      nextUpdate.getUTCFullYear(),
+      nextUpdate.getUTCMonth(),
+      nextUpdate.getUTCDate()
+    )
+  );
+
+  const $nextUpdate = document.querySelector('.next-update') as HTMLElement;
+  if ($nextUpdate !== null) {
+    $nextUpdate.innerText = getRemaining(now, nextUpdate);
+    $nextUpdate.setAttribute(
+      'title',
+      `${nextUpdate.toLocaleString()} local time (midnight UTC)`
+    );
+  }
+}
+let nextUpdateTimer = setInterval(() => {
+  setNextUpdate();
+}, 60000);
+setNextUpdate();
+
 let headerClickCount = 0;
 let headerClickCounter;
 

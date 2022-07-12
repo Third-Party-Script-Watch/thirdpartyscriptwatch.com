@@ -1,7 +1,6 @@
 {
   "name": "watcher",
   "version": "1.3.0",
-  "description": "",
   "engines": {
     "node": ">=16.0.0"
   },
@@ -21,5 +20,17 @@
     "@azure/functions": "^3.0.0",
     "@types/node": "16.x",
     "typescript": "^4.0.0"
-  }
+  },
+  "main": "DailyTrigger/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Third-Party-Script-Watch/thirdpartyscriptwatch.com.git"
+  },
+  "author": "Lindsay Evans <linz@linz.id.au>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Third-Party-Script-Watch/thirdpartyscriptwatch.com/issues"
+  },
+  "homepage": "https://github.com/Third-Party-Script-Watch/thirdpartyscriptwatch.com#readme",
+  "description": ""
 }

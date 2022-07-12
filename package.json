@@ -1,0 +1,23 @@
+{
+  "name": "thirdpartyscriptwatch.com",
+  "version": "1.3.0",
+  "description": "A service to track third-party script sizes over time",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Third-Party-Script-Watch/thirdpartyscriptwatch.com.git"
+  },
+  "keywords": [],
+  "author": "Lindsay Evans <linz@linz.id.au>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Third-Party-Script-Watch/thirdpartyscriptwatch.com/issues"
+  },
+  "homepage": "https://github.com/Third-Party-Script-Watch/thirdpartyscriptwatch.com#readme",
+  "workspaces": [
+    "src/ui",
+    "src/watcher"
+  ]
+}

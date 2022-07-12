@@ -20,12 +20,16 @@ For local development, you'll need to run a number of services (depending on wha
 * [Node JS](https://nodejs.org/) - v16
 * [Docker](https://www.docker.com/products/docker-desktop/) - only required to run the watcher service
 
+### Install project dependencies
+
+```sh
+npm install
+```
+
 ### UI
 
 ```sh
-cd src/ui
-npm install
-npm start
+npm start -w ui
 ```
 
 UI will be available at http://localhost:1234/
@@ -41,15 +45,13 @@ docker-compose up -d
 Start the function app:
 
 ```sh
-cd src/watcher
-npm i
-npm start -- --port 7072
+npm start -w watcher
 ```
 
 Manually trigger the function:
 
 ```sh
-curl -v -H "Content-Type:application/json" --data {} http://localhost:7072/admin/functions/DailyTrigger
+curl -v -H "Content-Type:application/json" --data {} http://localhost:7071/admin/functions/DailyTrigger
 ```
 
 Shutdown DB container when you're done:

@@ -220,6 +220,21 @@ p {
       background-color: #e3e3e3;
       border: 1px solid #ccc;
       border-radius: 4px;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(#666, 0.3);
+        border-radius: 2px;
+      }
+
+      &::-webkit-scrollbar-corner {
+        background: transparent;
+      }
 
       @media (min-width: 1024px) {
         max-width: 224px;

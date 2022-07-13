@@ -83,6 +83,10 @@ p {
 
   #script___inception {
     display: block;
+
+    @media (min-width: 1024px) {
+      display: flex;
+    }
   }
 }
 

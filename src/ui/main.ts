@@ -560,6 +560,10 @@ function getRemaining(now: Date, then: Date): string {
       setNextUpdate();
     }, 1000);
   }
+  if (seconds <= 0) {
+    remaining = 'Data updated - reload to view';
+    clearInterval(nextUpdateTimer);
+  }
 
   return remaining;
 }

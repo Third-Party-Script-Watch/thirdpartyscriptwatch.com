@@ -295,7 +295,7 @@ if ($output !== null) {
           points=""
         />
         <line x1="-16" y1="1" x2="-16" y2="104" stroke="#CCCCCC" class="chart-indicator-line"/>
-        <circle cx="-16" cy="-16" r="2" fill="#DB00FF" class="chart-indicator" />
+        <circle cx="-16" cy="-16" r="2" fill="#DB00FF" stroke="#e3e3e3" stroke-width="1" class="chart-indicator" />
       </svg>
       <p class="date-range">
         <span class="start-date"></span>

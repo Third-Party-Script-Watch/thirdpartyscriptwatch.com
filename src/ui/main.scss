@@ -83,6 +83,10 @@ p {
 
   #script___inception {
     display: block;
+
+    @media (min-width: 1024px) {
+      display: flex;
+    }
   }
 }
 
@@ -103,6 +107,7 @@ p {
   padding: 16px;
   border-radius: 8px;
   transition: all 0.15s ease-in-out;
+  --index: 29;
 
   &.hidden {
     display: none;
@@ -119,6 +124,37 @@ p {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
 
+  .chart-wrapper {
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: calc((var(--index) * 10px) - 7px);
+      display: block;
+      width: 16px;
+      height: 16px;
+      background-image: url(/node_modules/@material-design-icons/svg/outlined/push_pin.svg);
+      background-size: 16px;
+      opacity: 0.3;
+      transition: top 0.15s ease-in-out, opacity 0.3s ease-in-out;
+
+      @media (min-width: 1024px) {
+        top: -8px;
+        left: calc((var(--index) * 13.366666666666667px) - 8px);
+      }
+    }
+  }
+
+  &.pinned .chart-wrapper::after {
+    top: 0;
+    opacity: 0.5;
+
+    @media (min-width: 1024px) {
+      top: -4px;
+    }
+  }
+
   h3 {
     flex: 1 0 100%;
     margin: 0 0 8px;
@@ -133,15 +169,11 @@ p {
       align-items: flex-end;
       column-gap: 4px;
       position: relative;
-      padding-right: 32px;
       color: #111;
       text-decoration: none;
 
       &::after {
         content: '';
-        position: absolute;
-        top: 4px;
-        right: 0;
         display: block;
         width: 24px;
         height: 24px;
@@ -166,6 +198,8 @@ p {
   }
 
   .metadata {
+    margin: 4px 0;
+
     @media (min-width: 1024px) {
       width: calc(100% - 400px - 16px);
     }
@@ -353,11 +387,15 @@ p {
 }
 
 footer {
-  padding: 16px;
+  padding: 8px 16px;
   margin-top: 32px;
   border-top: 1px solid #ccc;
   font-size: 14px;
   color: #666;
+
+  @media (min-width: 1024px) {
+    padding: 16px 0;
+  }
 }
 
 footer ul {
@@ -416,7 +454,7 @@ form {
       border-radius: 4px;
 
       @media (min-width: 1024px) {
-        width: auto;
+        width: 14rem;
       }
 
       &:focus-visible {
@@ -426,9 +464,9 @@ form {
       }
 
       &:placeholder-shown + label {
-        top: 3px;
+        top: 4px;
         left: 32px;
-        font-size: 16px;
+        font-size: 14px;
       }
 
       &:focus-visible + label {

@@ -1,6 +1,6 @@
 {
   "name": "thirdpartyscriptwatch.com",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "A service to track third-party script sizes over time",
   "engines": {
     "node": ">=16.0.0"

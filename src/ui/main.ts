@@ -145,21 +145,22 @@ if ($output !== null) {
         <th>Type</th>
       </tr>
     </thead>
-    <tbody>
 `;
 
     subresources.forEach((metric) => {
-      html += `<tr><th colspan="3"><pre class="url">${
-        metric.url
-      }</pre></th></tr>
-  <tr>
-    <td>${formatSize(metric.contentLength)}</td>
-    <td>${metric.contentEncoding ? metric.contentEncoding : '-'}</td>
-    <td>${metric.contentType ? metric.contentType.split(';')[0] : '-'}</td>
-  </tr>`;
+      html += `<tbody>
+        <tr><th colspan="3"><pre class="url">${metric.url}</pre></th></tr>
+        <tr>
+          <td>${formatSize(metric.contentLength)}</td>
+          <td>${metric.contentEncoding ? metric.contentEncoding : '-'}</td>
+          <td>${
+            metric.contentType ? metric.contentType.split(';')[0] : '-'
+          }</td>
+        </tr>
+      </tbody>`;
     });
 
-    html += '</tbody></table>';
+    html += '</table>';
 
     return html;
   }
@@ -295,7 +296,7 @@ if ($output !== null) {
           points=""
         />
         <line x1="-16" y1="1" x2="-16" y2="104" stroke="#CCCCCC" class="chart-indicator-line"/>
-        <circle cx="-16" cy="-16" r="2" fill="#DB00FF" class="chart-indicator" />
+        <circle cx="-16" cy="-16" r="2" fill="#DB00FF" stroke="#e3e3e3" stroke-width="1" class="chart-indicator" />
       </svg>
       <p class="date-range">
         <span class="start-date"></span>
@@ -377,29 +378,41 @@ if ($output !== null) {
       $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
       $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
 
-      $chart.addEventListener('mousemove', (x) => {
-        const br = $chart.getBoundingClientRect();
-        const indexMultiplier = br.width / 30;
+      let isPinned = false;
+      $chart.addEventListener('click', (x) => {
+        isPinned = !isPinned;
+        $script.classList.toggle('pinned');
+      });
 
-        const index = Math.round(x.offsetX / indexMultiplier);
-        if (metrics[index]) {
-          populateMetadata($script, metrics[index], scriptData);
-          $chartIndicator.setAttribute('cx', (index * 10).toString());
-          $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
-          $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
-          $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
+      $chart.addEventListener('mousemove', (x) => {
+        if (!isPinned) {
+          const br = $chart.getBoundingClientRect();
+          const indexMultiplier = br.width / 30;
+
+          const index = Math.round(x.offsetX / indexMultiplier);
+          if (metrics[index]) {
+            $script.style.setProperty('--index', index.toString());
+            populateMetadata($script, metrics[index], scriptData);
+            $chartIndicator.setAttribute('cx', (index * 10).toString());
+            $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
+            $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
+            $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
+          }
         }
       });
       $chart.addEventListener('touchmove', (e) => {
-        const br = $chart.getBoundingClientRect();
-        const x = e.touches[0].clientX - br.left;
-        const index = Math.round(x / 10);
-        if (metrics[index]) {
-          populateMetadata($script, metrics[index], scriptData);
-          $chartIndicator.setAttribute('cx', (index * 10).toString());
-          $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
-          $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
-          $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
+        if (!isPinned) {
+          const br = $chart.getBoundingClientRect();
+          const x = e.touches[0].clientX - br.left;
+          const index = Math.round(x / 10);
+          if (metrics[index]) {
+            $script.style.setProperty('--index', index.toString());
+            populateMetadata($script, metrics[index], scriptData);
+            $chartIndicator.setAttribute('cx', (index * 10).toString());
+            $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
+            $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
+            $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
+          }
         }
       });
     }
@@ -516,9 +529,15 @@ function filterScripts(keywords: string) {
       const normalisedName = $script
         .querySelector('h3')
         ?.innerText.toLowerCase();
+      const hasMatchingUrl = Array.from($script.querySelectorAll('.url')).find(
+        (x) => x.innerHTML.toLowerCase().includes(keywords)
+      );
       $script.classList.toggle(
         'hidden',
-        !(normalisedName && normalisedName.includes(keywords))
+        !(
+          (normalisedName && normalisedName.includes(keywords)) ||
+          hasMatchingUrl
+        )
       );
     }
   });
@@ -527,10 +546,10 @@ function filterScripts(keywords: string) {
 function getRemaining(now: Date, then: Date): string {
   const seconds = Math.round((then.getTime() - now.getTime()) / 1000);
   const minutes = Math.round(seconds / 60);
-  let remaining = 'Next update: ';
+  let remaining = 'Data will update in ';
 
   if (minutes > 60) {
-    remaining += `${Math.round(minutes / 60 - 1)}h, `;
+    remaining += `${Math.round(minutes / 60 - 1)}h `;
   }
   if (seconds > 60) {
     remaining += `${Math.round(minutes % 60)}m`;
@@ -540,6 +559,10 @@ function getRemaining(now: Date, then: Date): string {
     nextUpdateTimer = setInterval(() => {
       setNextUpdate();
     }, 1000);
+  }
+  if (seconds <= 0) {
+    remaining = 'Data updated - reload to view';
+    clearInterval(nextUpdateTimer);
   }
 
   return remaining;

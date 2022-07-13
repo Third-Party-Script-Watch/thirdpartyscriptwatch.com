@@ -526,7 +526,7 @@ function getRemaining(now: Date, then: Date): string {
   let remaining = 'Next update: ';
 
   if (minutes > 60) {
-    remaining += `${Math.round(minutes / 60)}h, `;
+    remaining += `${Math.round(minutes / 60 - 1)}h, `;
   }
   if (seconds > 60) {
     remaining += `${Math.round(minutes % 60)}m`;

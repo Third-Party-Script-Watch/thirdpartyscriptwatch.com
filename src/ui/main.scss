@@ -125,8 +125,8 @@ p {
     &::after {
       content: '';
       position: absolute;
-      top: -8px;
-      left: calc((var(--index) * 10px) - 8px);
+      top: -4px;
+      left: calc((var(--index) * 10px) - 7px);
       display: block;
       width: 16px;
       height: 16px;
@@ -136,14 +136,19 @@ p {
       transition: top 0.15s ease-in-out, opacity 0.3s ease-in-out;
 
       @media (min-width: 1024px) {
+        top: -8px;
         left: calc((var(--index) * 13.366666666666667px) - 8px);
       }
     }
   }
 
   &.pinned .chart-wrapper::after {
-    top: -4px;
+    top: 0;
     opacity: 0.5;
+
+    @media (min-width: 1024px) {
+      top: -4px;
+    }
   }
 
   h3 {

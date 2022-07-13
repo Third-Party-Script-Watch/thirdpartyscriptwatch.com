@@ -377,29 +377,41 @@ if ($output !== null) {
       $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
       $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
 
-      $chart.addEventListener('mousemove', (x) => {
-        const br = $chart.getBoundingClientRect();
-        const indexMultiplier = br.width / 30;
+      let isPinned = false;
+      $chart.addEventListener('click', (x) => {
+        isPinned = !isPinned;
+        $script.classList.toggle('pinned');
+      });
 
-        const index = Math.round(x.offsetX / indexMultiplier);
-        if (metrics[index]) {
-          populateMetadata($script, metrics[index], scriptData);
-          $chartIndicator.setAttribute('cx', (index * 10).toString());
-          $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
-          $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
-          $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
+      $chart.addEventListener('mousemove', (x) => {
+        if (!isPinned) {
+          const br = $chart.getBoundingClientRect();
+          const indexMultiplier = br.width / 30;
+
+          const index = Math.round(x.offsetX / indexMultiplier);
+          if (metrics[index]) {
+            $script.style.setProperty('--index', index.toString());
+            populateMetadata($script, metrics[index], scriptData);
+            $chartIndicator.setAttribute('cx', (index * 10).toString());
+            $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
+            $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
+            $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
+          }
         }
       });
       $chart.addEventListener('touchmove', (e) => {
-        const br = $chart.getBoundingClientRect();
-        const x = e.touches[0].clientX - br.left;
-        const index = Math.round(x / 10);
-        if (metrics[index]) {
-          populateMetadata($script, metrics[index], scriptData);
-          $chartIndicator.setAttribute('cx', (index * 10).toString());
-          $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
-          $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
-          $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
+        if (!isPinned) {
+          const br = $chart.getBoundingClientRect();
+          const x = e.touches[0].clientX - br.left;
+          const index = Math.round(x / 10);
+          if (metrics[index]) {
+            $script.style.setProperty('--index', index.toString());
+            populateMetadata($script, metrics[index], scriptData);
+            $chartIndicator.setAttribute('cx', (index * 10).toString());
+            $chartIndicator.setAttribute('cy', points[index].split(', ')[1]);
+            $chartIndicatorLine.setAttribute('x1', (index * 10).toString());
+            $chartIndicatorLine.setAttribute('x2', (index * 10).toString());
+          }
         }
       });
     }

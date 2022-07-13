@@ -19,5 +19,11 @@
   "workspaces": [
     "src/ui",
     "src/watcher"
-  ]
+  ],
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.6.2"
+  },
+  "staticFiles": {
+    "staticPath": "./static/"
+  }
 }

@@ -194,6 +194,8 @@ p {
   }
 
   .metadata {
+    margin: 4px 0;
+
     @media (min-width: 1024px) {
       width: calc(100% - 400px - 16px);
     }

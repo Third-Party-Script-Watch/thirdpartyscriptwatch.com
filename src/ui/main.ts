@@ -210,7 +210,7 @@ if ($output !== null) {
       const $subresourcesWrapper = document.createElement('div');
       const subresourcesHtml =
         metric.subresources.length > 0
-          ? `<details class="subresources" open>
+          ? `<details class="subresources">
           <summary><strong class="subresources-label"></strong> <span class="subresources-size"></span> <span class="subresources-trend"></span></summary>
         </details>`
           : `<p>

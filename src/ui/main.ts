@@ -528,9 +528,15 @@ function filterScripts(keywords: string) {
       const normalisedName = $script
         .querySelector('h3')
         ?.innerText.toLowerCase();
+      const hasMatchingUrl = Array.from($script.querySelectorAll('.url')).find(
+        (x) => x.innerHTML.toLowerCase().includes(keywords)
+      );
       $script.classList.toggle(
         'hidden',
-        !(normalisedName && normalisedName.includes(keywords))
+        !(
+          (normalisedName && normalisedName.includes(keywords)) ||
+          hasMatchingUrl
+        )
       );
     }
   });

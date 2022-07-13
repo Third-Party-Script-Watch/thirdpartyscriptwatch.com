@@ -16,8 +16,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Check for changes to API or UI
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      watcher: ${{ steps.filter.outputs.watcher }}
+      ui: ${{ steps.filter.outputs.ui }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          list-files: 'none'
+          filters: |
+            ui:
+            - '.github/workflows/azure-static-web-apps-gray-mud-082057c1e.yml'
+            - 'package.json'
+            - 'package-lock.json'
+            - 'src/ui/**'
+
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    needs: changes
+    if: needs.changes.outputs.ui == 'true' && (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed'))
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
@@ -31,14 +53,15 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_MUD_082057C1E }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: 'upload'
-          app_location: '/src/ui/'
-          app_build_command: 'npm run build'
+          app_location: '/'
+          app_build_command: 'npm run build:ui'
           skip_api_build: true
-          output_location: 'dist/'
+          output_location: 'src/ui/dist/'
           production_branch: 'main'
 
   close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    needs: changes
+    if: needs.changes.outputs.ui == 'true' && github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:

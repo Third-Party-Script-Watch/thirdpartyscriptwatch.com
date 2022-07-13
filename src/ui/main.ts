@@ -539,10 +539,10 @@ function filterScripts(keywords: string) {
 function getRemaining(now: Date, then: Date): string {
   const seconds = Math.round((then.getTime() - now.getTime()) / 1000);
   const minutes = Math.round(seconds / 60);
-  let remaining = 'Next update: ';
+  let remaining = 'Next update in ';
 
   if (minutes > 60) {
-    remaining += `${Math.round(minutes / 60 - 1)}h, `;
+    remaining += `${Math.round(minutes / 60 - 1)}h & `;
   }
   if (seconds > 60) {
     remaining += `${Math.round(minutes % 60)}m`;

@@ -19,14 +19,14 @@ body {
 
 a:link,
 a:visited {
-  color: design-tokens.$colours-primary;
+  color: design-tokens.$colours-blue-800;
   text-decoration-skip-ink: auto;
   transition: color 0.15s ease-in-out;
 }
 
 a:hover,
 a:active {
-  color: design-tokens.$colours-secondary;
+  color: design-tokens.$colours-magenta-800;
 }
 
 ::selection {

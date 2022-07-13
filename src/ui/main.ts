@@ -179,7 +179,7 @@ if ($output !== null) {
       const html = `
         <p><strong>Date:</strong> <span class="retrieved"></span></p>
         <details>
-          <summary><strong>Initial script:</strong> <span class="size"></span></summary>
+          <summary><strong>Initial script:</strong> <span class="size"></span> <span class="trend"></span></summary>
           <strong>URL:</strong>
           <pre class="url"></pre>
           <strong>Initialisation HTML:</strong>
@@ -210,7 +210,7 @@ if ($output !== null) {
       const subresourcesHtml =
         metric.subresources.length > 0
           ? `<details class="subresources">
-          <summary><strong class="subresources-label"></strong> <span class="subresources-size"></span></summary>
+          <summary><strong class="subresources-label"></strong> <span class="subresources-size"></span> <span class="subresources-trend"></span></summary>
         </details>`
           : `<p>
           <strong class="subresources-label"></strong> <span class="subresources-size"></span>
@@ -232,6 +232,15 @@ if ($output !== null) {
       setElementText($script, '.size', formatSize(contentLength));
       setElementTitle($script, '.size', `${contentLength} bytes`);
 
+      const previousMetricIndex =
+        scriptData.metrics.findIndex((x) => x.retrieved === metric.retrieved) -
+        1;
+      if (previousMetricIndex > -1) {
+        const previousMetric = scriptData.metrics[previousMetricIndex];
+        const previousSize = previousMetric.contentLength;
+        setTrend($script, '.trend', contentLength, previousSize);
+      }
+
       if (subresources.length > 0) {
         setElementText(
           $script,
@@ -250,6 +259,19 @@ if ($output !== null) {
           '.subresources-size',
           `${subresourcesSize} bytes`
         );
+
+        if (previousMetricIndex > -1) {
+          const previousMetric = scriptData.metrics[previousMetricIndex];
+          const previousSize = previousMetric.subresources
+            .map((x) => x.contentLength)
+            .reduce((a, b) => a + b, 0);
+          setTrend(
+            $script,
+            '.subresources-trend',
+            subresourcesSize,
+            previousSize
+          );
+        }
       } else {
         setElementText($script, '.subresources-label', '0 subresources');
       }
@@ -401,6 +423,36 @@ if ($output !== null) {
       const $innerEl = $el.querySelector<HTMLElement>(selector);
       if ($innerEl !== null) {
         $innerEl.title = text;
+      }
+    }
+  }
+}
+
+function setTrend(
+  $el: HTMLElement | null,
+  selector: string,
+  currentSize: number,
+  previousSize: number
+) {
+  if ($el !== null) {
+    const $innerEl = $el.querySelector<HTMLElement>(selector);
+    if ($innerEl !== null) {
+      if (previousSize === -1 || currentSize === -1) {
+        $innerEl.title = '';
+        $innerEl.className = `${selector.replace('.', '')}`;
+      } else if (currentSize === previousSize) {
+        $innerEl.title = `No change since previous day`;
+        $innerEl.className = `${selector.replace('.', '')} flat`;
+      } else if (currentSize > previousSize) {
+        $innerEl.title = `Increased ${
+          currentSize - previousSize
+        }b since previous day`;
+        $innerEl.className = `${selector.replace('.', '')} up`;
+      } else if (currentSize < previousSize) {
+        $innerEl.title = `Decreased ${
+          previousSize - currentSize
+        }b since previous day`;
+        $innerEl.className = `${selector.replace('.', '')} down`;
       }
     }
   }

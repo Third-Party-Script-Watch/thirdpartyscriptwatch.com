@@ -32,7 +32,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: 'upload'
           app_location: '/'
-          app_build_command: 'npm run build -w ui'
+          app_build_command: 'npm run build:ui'
           skip_api_build: true
           output_location: 'src/ui/dist/'
           production_branch: 'main'

@@ -145,21 +145,22 @@ if ($output !== null) {
         <th>Type</th>
       </tr>
     </thead>
-    <tbody>
 `;
 
     subresources.forEach((metric) => {
-      html += `<tr><th colspan="3"><pre class="url">${
-        metric.url
-      }</pre></th></tr>
-  <tr>
-    <td>${formatSize(metric.contentLength)}</td>
-    <td>${metric.contentEncoding ? metric.contentEncoding : '-'}</td>
-    <td>${metric.contentType ? metric.contentType.split(';')[0] : '-'}</td>
-  </tr>`;
+      html += `<tbody>
+        <tr><th colspan="3"><pre class="url">${metric.url}</pre></th></tr>
+        <tr>
+          <td>${formatSize(metric.contentLength)}</td>
+          <td>${metric.contentEncoding ? metric.contentEncoding : '-'}</td>
+          <td>${
+            metric.contentType ? metric.contentType.split(';')[0] : '-'
+          }</td>
+        </tr>
+      </tbody>`;
     });
 
-    html += '</tbody></table>';
+    html += '</table>';
 
     return html;
   }
@@ -209,7 +210,7 @@ if ($output !== null) {
       const $subresourcesWrapper = document.createElement('div');
       const subresourcesHtml =
         metric.subresources.length > 0
-          ? `<details class="subresources">
+          ? `<details class="subresources" open>
           <summary><strong class="subresources-label"></strong> <span class="subresources-size"></span> <span class="subresources-trend"></span></summary>
         </details>`
           : `<p>

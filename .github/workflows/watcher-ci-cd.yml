@@ -16,7 +16,28 @@ env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: 'src/watcher'
 
 jobs:
+  # Check for changes to API or UI
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      watcher: ${{ steps.filter.outputs.watcher }}
+      ui: ${{ steps.filter.outputs.ui }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          list-files: 'none'
+          filters: |
+            watcher:
+            - '.github/workflows/watcher-ci-cd.yml'
+            - 'package.json'
+            - 'package-lock.json'
+            - 'src/watcher/**'
+
   build_and_deploy_job:
+    needs: changes
+    if: ${{ needs.changes.outputs.watcher == 'true' }}
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:

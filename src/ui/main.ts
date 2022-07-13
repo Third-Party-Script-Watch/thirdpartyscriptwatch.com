@@ -262,15 +262,19 @@ if ($output !== null) {
 
         if (previousMetricIndex > -1) {
           const previousMetric = scriptData.metrics[previousMetricIndex];
-          const previousSize = previousMetric.subresources
-            .map((x) => x.contentLength)
-            .reduce((a, b) => a + b, 0);
-          setTrend(
-            $script,
-            '.subresources-trend',
-            subresourcesSize,
-            previousSize
-          );
+          if (previousMetric.contentLength > -1) {
+            const previousSize = previousMetric.subresources
+              .map((x) => x.contentLength)
+              .reduce((a, b) => a + b, 0);
+            setTrend(
+              $script,
+              '.subresources-trend',
+              subresourcesSize,
+              previousSize
+            );
+          } else {
+            setTrend($script, '.subresources-trend', 0, 0);
+          }
         }
       } else {
         setElementText($script, '.subresources-label', '0 subresources');

@@ -1,5 +1,6 @@
 @use './style/design-tokens';
 
+// Global styles
 html,
 body {
   height: 100vh;
@@ -34,15 +35,7 @@ a:active {
   background: rgba(design-tokens.$colours-secondary, 0.2);
 }
 
-.loading-spinner {
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-}
-
-.loading .loading-spinner {
-  opacity: 1;
-}
-
+// Header & intro
 h1 {
   margin: 16px;
   font-weight: 100;
@@ -61,54 +54,106 @@ h1 {
   }
 }
 
-h2 {
-  font-size: 24px;
-  font-weight: 100;
-}
+// Results heading, next update & filter
+form {
+  width: 300px;
+  padding: 0 16px;
+  margin-bottom: 16px;
 
-h3 {
-  font-size: 22px;
-  font-weight: 100;
-}
-
-p {
-  font-weight: 300;
-}
-
-#output {
-  flex: 1 0 100vh;
-}
-
-#script___inception {
-  display: none;
-}
-
-.inception {
-  .script {
-    display: none;
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 16px;
+    align-items: center;
+    width: 650px;
+    margin-bottom: 0;
   }
 
-  #script___inception {
-    display: block;
+  .results-heading {
+    font-size: 24px;
+    font-weight: 100;
+  }
+
+  .next-update {
+    margin-bottom: 24px;
+    flex-grow: 1;
+    font-size: 14px;
 
     @media (min-width: 1024px) {
-      display: flex;
+      margin-bottom: 6px;
+    }
+  }
+
+  .filter {
+    position: relative;
+
+    label {
+      position: absolute;
+      top: -16px;
+      left: 0;
+      font-size: 12px;
+      font-weight: 300;
+      transition: all 0.15s ease-in-out;
+    }
+
+    input {
+      width: 100%;
+      padding: 4px 4px 4px 32px;
+      background-color: rgba(design-tokens.$colours-grey-300, 0.5);
+      border: 1px solid design-tokens.$colours-grey-300;
+      border-radius: 4px;
+
+      @media (min-width: 1024px) {
+        width: 14rem;
+      }
+
+      &:focus-visible {
+        outline: none;
+        border-color: design-tokens.$colours-grey-700;
+        box-shadow: 0 0 4px 4px rgba(design-tokens.$colours-primary, 0.3);
+      }
+
+      &:placeholder-shown + label {
+        top: 4px;
+        left: 32px;
+        font-size: 14px;
+      }
+
+      &:focus-visible + label {
+        top: -16px;
+        left: 0;
+        font-size: 12px;
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 4px;
+      display: block;
+      width: 24px;
+      height: 24px;
+      background: url(/node_modules/@material-design-icons/svg/round/search.svg);
+      opacity: 0.2;
     }
   }
 }
 
-.party {
-  background: url(./images/loading.svg);
-  background-size: 32px;
+// Output area, loading state
+#output {
+  flex: 1 0 100vh;
+  .loading-spinner {
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
 
-  > * {
-    background-color: rgba(design-tokens.$colours-grey-200, 0.2);
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 30px rgba(design-tokens.$colours-grey-900, 0.1);
-    border-radius: 8px;
+    .loading & {
+      opacity: 1;
+    }
   }
 }
 
+// Scripts
 .script {
   width: 300px;
   padding: 16px;
@@ -133,6 +178,7 @@ p {
 
   .chart-wrapper {
     position: relative;
+
     &::after {
       content: '';
       position: absolute;
@@ -165,6 +211,8 @@ p {
   h3 {
     flex: 1 0 100%;
     margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 100;
 
     span span {
       font-size: 1rem;
@@ -368,31 +416,32 @@ p {
       margin-bottom: 0;
     }
   }
-}
 
-.chart-wrapper {
-  width: 300px;
+  .chart-wrapper {
+    width: 300px;
 
-  @media (min-width: 1024px) {
-    width: 400px;
+    @media (min-width: 1024px) {
+      width: 400px;
+    }
+  }
+
+  .chart {
+    width: 300px;
+    height: 104px;
+    margin-top: 12px;
+    border-left: 1px solid design-tokens.$colours-grey-300;
+    border-bottom: 1px solid design-tokens.$colours-grey-300;
+    cursor: crosshair;
+
+    @media (min-width: 1024px) {
+      width: 400px;
+      height: 139px;
+      margin-top: 8px;
+    }
   }
 }
 
-.chart {
-  width: 300px;
-  height: 104px;
-  margin-top: 12px;
-  border-left: 1px solid design-tokens.$colours-grey-300;
-  border-bottom: 1px solid design-tokens.$colours-grey-300;
-  cursor: crosshair;
-
-  @media (min-width: 1024px) {
-    width: 400px;
-    height: 139px;
-    margin-top: 8px;
-  }
-}
-
+// Footer
 footer {
   padding: 8px 16px;
   margin-top: 32px;
@@ -403,96 +452,47 @@ footer {
   @media (min-width: 1024px) {
     padding: 16px 0;
   }
-}
 
-footer ul {
-  display: flex;
-  flex-direction: column;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-footer li {
-  margin-bottom: 4px;
-}
-
-form {
-  width: 300px;
-  padding: 0 16px;
-  margin-bottom: 16px;
-
-  @media (min-width: 1024px) {
+  ul {
     display: flex;
-    justify-content: space-between;
-    column-gap: 16px;
-    align-items: center;
-    width: 650px;
-    margin-bottom: 0;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
 
-  .next-update {
-    margin-bottom: 24px;
-    flex-grow: 1;
-    font-size: 14px;
+  li {
+    margin-bottom: 4px;
+  }
+}
+
+// Easter eggs
+#script___inception {
+  display: none;
+}
+
+.inception {
+  .script {
+    display: none;
+  }
+
+  #script___inception {
+    display: block;
 
     @media (min-width: 1024px) {
-      margin-bottom: 6px;
+      display: flex;
     }
   }
+}
 
-  .filter {
-    position: relative;
+.party {
+  background: url(./images/loading.svg);
+  background-size: 32px;
 
-    label {
-      position: absolute;
-      top: -16px;
-      left: 0;
-      font-size: 12px;
-      font-weight: 300;
-      transition: all 0.15s ease-in-out;
-    }
-
-    input {
-      width: 100%;
-      padding: 4px 4px 4px 32px;
-      background-color: rgba(design-tokens.$colours-grey-300, 0.5);
-      border: 1px solid design-tokens.$colours-grey-300;
-      border-radius: 4px;
-
-      @media (min-width: 1024px) {
-        width: 14rem;
-      }
-
-      &:focus-visible {
-        outline: none;
-        border-color: design-tokens.$colours-grey-700;
-        box-shadow: 0 0 4px 4px rgba(design-tokens.$colours-primary, 0.3);
-      }
-
-      &:placeholder-shown + label {
-        top: 4px;
-        left: 32px;
-        font-size: 14px;
-      }
-
-      &:focus-visible + label {
-        top: -16px;
-        left: 0;
-        font-size: 12px;
-      }
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 1px;
-      left: 4px;
-      display: block;
-      width: 24px;
-      height: 24px;
-      background: url(/node_modules/@material-design-icons/svg/round/search.svg);
-      opacity: 0.2;
-    }
+  > * {
+    background-color: rgba(design-tokens.$colours-grey-200, 0.2);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 30px rgba(design-tokens.$colours-grey-900, 0.1);
+    border-radius: 8px;
   }
 }

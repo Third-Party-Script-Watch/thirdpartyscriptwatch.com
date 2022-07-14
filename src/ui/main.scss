@@ -488,8 +488,10 @@ footer {
 }
 
 .party {
-  background: url(./images/loading.svg);
-  background-size: 32px;
+  background-image: url(./images/loading.svg);
+  background-attachment: fixed;
+  background-position: center top;
+  background-size: 128px;
 
   > * {
     background-color: rgba(design-tokens.$colours-grey-200, 0.2);

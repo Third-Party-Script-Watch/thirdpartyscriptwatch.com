@@ -312,12 +312,10 @@ if ($output !== null) {
     if ($script !== null) {
       const $innerEl = $script.querySelector<HTMLElement>('h3');
       if ($innerEl !== null) {
-        $innerEl.innerHTML = `<a href="#${
-          $script.id
-        }"><span>${data.name.replace(
+        $innerEl.innerHTML = `<a href="#${$script.id}">${data.name.replace(
           /\(([^\)]*)\)/g,
-          '<span>$1</span>'
-        )}</span></a>`;
+          '<small>$1</small>'
+        )}</a>`;
       }
     }
 

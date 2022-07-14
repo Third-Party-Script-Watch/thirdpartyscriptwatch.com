@@ -213,9 +213,11 @@ form {
     margin: 0 0 8px;
     font-size: 22px;
     font-weight: 100;
+    line-height: 24px;
 
-    span span {
+    small {
       font-size: 1rem;
+      line-height: 19px;
     }
 
     a:link,

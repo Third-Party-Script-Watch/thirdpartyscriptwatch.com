@@ -1,6 +1,6 @@
 <template>
   <img src="./images/loading.svg" class="loading-spinner" width="32" alt="Loading..." v-if="state.scripts.length === 0" />
-  <Script v-else v-for="script in state.scripts" :script="script"></Script>
+  <Script v-else v-for="script in state.scripts" :key="script.id" :script="script"></Script>
 </template>
 
 <script setup lang="ts">

@@ -41,7 +41,7 @@ h1 {
   font-weight: 100;
 }
 
-.intro {
+#intro {
   margin: 4px 0 16px;
   padding: 8px;
   font-size: 16px;
@@ -51,6 +51,15 @@ h1 {
     margin: 4px 0 32px;
     padding: 16px;
     font-size: 18px;
+  }
+
+  sup {
+    vertical-align: text-top;
+
+    a:link,
+    a:visited {
+      text-decoration: none;
+    }
   }
 }
 
@@ -443,15 +452,53 @@ form {
   }
 }
 
-// Footer
-footer {
+// Caveats
+#caveats {
+  width: 300px;
   padding: 8px 16px;
   margin-top: 32px;
+  border-top: 1px solid design-tokens.$colours-grey-300;
+
+  @media (min-width: 1024px) {
+    width: 650px;
+    padding: 16px 0;
+    margin-bottom: 0;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 100;
+  }
+
+  .back {
+    a {
+      display: flex;
+      align-items: center;
+      column-gap: 4px;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 16px;
+        height: 16px;
+        background: url(/node_modules/@material-design-icons/svg/round/arrow_upward.svg);
+        background-size: 16px;
+        opacity: 0.666;
+      }
+    }
+  }
+}
+
+// Footer
+footer {
+  width: 300px;
+  padding: 8px 16px;
   border-top: 1px solid design-tokens.$colours-grey-300;
   font-size: 14px;
   color: design-tokens.$colours-grey-700;
 
   @media (min-width: 1024px) {
+    width: 650px;
     padding: 16px 0;
   }
 

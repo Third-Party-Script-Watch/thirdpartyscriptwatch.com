@@ -462,24 +462,32 @@ function setTrend(
   previousSize: number
 ) {
   if ($el !== null) {
+    // Consider any change greater than this many bytes to be an upward or downward trend
+    const changeThreshold = 1024;
+
     const $innerEl = $el.querySelector<HTMLElement>(selector);
     if ($innerEl !== null) {
       if (previousSize === -1 || currentSize === -1) {
         $innerEl.title = '';
         $innerEl.className = `${selector.replace('.', '')}`;
-      } else if (currentSize === previousSize) {
-        $innerEl.title = `No change since previous day`;
+      } else if (currentSize - previousSize > changeThreshold) {
+        $innerEl.className = `${selector.replace('.', '')} up`;
+      } else if (previousSize - currentSize > changeThreshold) {
+        $innerEl.className = `${selector.replace('.', '')} down`;
+      } else {
         $innerEl.className = `${selector.replace('.', '')} flat`;
-      } else if (currentSize > previousSize) {
+      }
+
+      if (currentSize > previousSize) {
         $innerEl.title = `Increased ${
           currentSize - previousSize
         }b since previous day`;
-        $innerEl.className = `${selector.replace('.', '')} up`;
       } else if (currentSize < previousSize) {
         $innerEl.title = `Decreased ${
           previousSize - currentSize
         }b since previous day`;
-        $innerEl.className = `${selector.replace('.', '')} down`;
+      } else if (currentSize === previousSize) {
+        $innerEl.title = `No change since previous day`;
       }
     }
   }

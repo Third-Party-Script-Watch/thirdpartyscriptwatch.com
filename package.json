@@ -25,7 +25,8 @@
     "src/watcher"
   ],
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.6.2"
+    "@parcel/transformer-sass": "^2.6.2",
+    "@parcel/transformer-vue": "^2.6.2"
   },
   "staticFiles": {
     "staticPath": "./static/"

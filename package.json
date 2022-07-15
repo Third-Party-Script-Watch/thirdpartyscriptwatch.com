@@ -5,6 +5,13 @@
   "engines": {
     "node": ">=16.0.0"
   },
+  "targets": {
+    "modern": {
+      "engines": {
+        "browsers": ">= 50%"
+      }
+    }
+  },
   "scripts": {
     "build:ui": "npm run build -w ui",
     "test": "echo \"Error: no test specified\" && exit 1"

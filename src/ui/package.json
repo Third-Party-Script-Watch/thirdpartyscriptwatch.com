@@ -5,6 +5,13 @@
   "engines": {
     "node": ">=16.0.0"
   },
+  "targets": {
+    "modern": {
+      "engines": {
+        "browsers": ">= 50%"
+      }
+    }
+  },
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build",

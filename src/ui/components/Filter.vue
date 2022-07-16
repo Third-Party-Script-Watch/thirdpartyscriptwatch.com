@@ -24,8 +24,9 @@ let nextUpdateTimer;
 onMounted(() => {
     const params = new URLSearchParams(document.location.search);
     if (params !== undefined) {
-        const keywordsParam = params.get('q');
+        let keywordsParam = params.get('q');
         if (keywordsParam !== null) {
+            keywordsParam = keywordsParam.toLowerCase().trim();
             keywords.value = keywordsParam;
             emit('filterChange', keywordsParam);
         }
@@ -39,11 +40,12 @@ onMounted(() => {
 })
 
 function onKeywordsChange() {
-    emit('filterChange', keywords.value);
+    const keywordsParam = keywords.value.toLowerCase().trim();
+    emit('filterChange', keywordsParam);
     window.history.replaceState(
         {},
         document.title,
-        keywords.value === '' ? window.location.pathname : `?q=${keywords.value}`
+        keywords.value === '' ? window.location.pathname : `?q=${keywordsParam}`
     );
 }
 

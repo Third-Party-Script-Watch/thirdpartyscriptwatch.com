@@ -100,12 +100,12 @@ function filterScripts() {
 }
 
 function scrollToAnchorlink() {
-  if (window.location.hash && window.location.hash.startsWith('#script_')) {
+  if (window.location.hash && window.location.hash.length > 1) {
     setTimeout(() => {
-      const $script = document.querySelector(window.location.hash);
-      if ($script !== null) {
-        $script.classList.add('target');
-        $script.scrollIntoView({
+      const $target = document.querySelector(window.location.hash);
+      if ($target !== null) {
+        $target.classList.add('target');
+        $target.scrollIntoView({
           behavior: 'smooth',
         });
       }

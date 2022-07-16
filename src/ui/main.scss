@@ -150,7 +150,7 @@ form {
 }
 
 // Output area, loading state
-#output {
+#app {
   flex: 1 0 100vh;
   .loading-spinner {
     opacity: 0;

@@ -1,9 +1,16 @@
 {
   "name": "thirdpartyscriptwatch.com",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A service to track third-party script sizes over time",
   "engines": {
     "node": ">=16.0.0"
+  },
+  "targets": {
+    "modern": {
+      "engines": {
+        "browsers": ">= 50%"
+      }
+    }
   },
   "scripts": {
     "build:ui": "npm run build -w ui",
@@ -25,7 +32,10 @@
     "src/watcher"
   ],
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.6.2"
+    "@parcel/optimizer-data-url": "^2.6.2",
+    "@parcel/transformer-inline-string": "^2.6.2",
+    "@parcel/transformer-sass": "^2.6.2",
+    "@parcel/transformer-vue": "^2.6.2"
   },
   "staticFiles": {
     "staticPath": "./static/"

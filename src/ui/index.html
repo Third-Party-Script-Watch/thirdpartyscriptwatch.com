@@ -4,35 +4,51 @@
     <meta charset="utf-8" />
     <title>Third Party Script Watch</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preconnect"
+      href="https://data.thirdpartyscriptwatch.com/data/metrics-30.json"
+    />
     <link rel="stylesheet" href="./main.scss" />
     <link rel="icon" type="image/svg+xml" href="./images/favicon.svg" />
     <link rel="icon" type="image/png" href="./images/favicon.png" />
     <meta name="theme-color" content="#ccc" />
+    <meta
+      name="description"
+      content="Tracking the size of third-party scripts over time"
+    />
   </head>
   <body>
     <header>
       <h1>Third Party Script Watch</h1>
     </header>
 
-    <p class="intro">Tracking the size of third-party scripts over time</p>
+    <p id="intro">
+      Tracking the size<sup><a href="#caveats">&#42;</a></sup> of third-party
+      scripts over time
+    </p>
 
-    <form>
-      <h2>Last 30 days results</h2>
-      <p class="next-update"></p>
-      <div class="filter">
-        <input name="q" id="q" type="search" placeholder=" " />
-        <label for="q">Filter by name or URL</label>
-      </div>
-    </form>
-
-    <div id="output">
+    <main id="app">
       <img
-        src="images/loading.svg"
+        src="./images/loading.svg"
         class="loading-spinner"
         width="32"
         alt="Loading..."
       />
-    </div>
+    </main>
+
+    <aside id="caveats">
+      <h2>Caveats</h2>
+      <p>
+        Size may not reflect exactly what you see in your browser's developer
+        tools - it's calculated from the response content-length plus an
+        approximation of the header size.
+      </p>
+      <p>
+        Additional factors such as cookies, location or language detection may
+        also impact the size.
+      </p>
+      <p class="back"><a href="#intro">Back to intro</a></p>
+    </aside>
 
     <footer>
       <ul>
@@ -57,6 +73,7 @@
       </ul>
     </footer>
 
-    <script src="./main.ts" type="module"></script>
+    <script src="./index.ts" type="module"></script>
+    <script src="./easter-eggs.ts" type="module"></script>
   </body>
 </html>

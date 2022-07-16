@@ -1,9 +1,16 @@
 {
   "name": "ui",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "source": "index.html",
   "engines": {
     "node": ">=16.0.0"
+  },
+  "targets": {
+    "modern": {
+      "engines": {
+        "browsers": ">= 50%"
+      }
+    }
   },
   "scripts": {
     "start": "parcel index.html",
@@ -19,7 +26,8 @@
     "parcel-reporter-static-files-copy": "^1.3.4"
   },
   "dependencies": {
-    "@material-design-icons/svg": "^0.11.4"
+    "@material-design-icons/svg": "^0.11.4",
+    "vue": "^3.2.37"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,10 @@
+@use './style/design-tokens';
+
+// Global styles
 html,
 body {
-  height: 100%;
+  height: 100vh;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -11,41 +15,33 @@ body {
   align-items: center;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #e3e3e3;
-  color: #111;
+  background-color: design-tokens.$colours-grey-200;
+  color: design-tokens.$colours-grey-900;
 }
 
 a:link,
 a:visited {
-  color: #0074d9;
+  color: design-tokens.$colours-blue-800;
   text-decoration-skip-ink: auto;
   transition: color 0.15s ease-in-out;
 }
 
 a:hover,
 a:active {
-  color: #db00ff;
+  color: design-tokens.$colours-magenta-800;
 }
 
 ::selection {
-  background: rgba(#db00ff, 0.2);
+  background: rgba(design-tokens.$colours-secondary, 0.2);
 }
 
-.loading-spinner {
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-}
-
-.loading .loading-spinner {
-  opacity: 1;
-}
-
+// Header & intro
 h1 {
   margin: 16px;
   font-weight: 100;
 }
 
-.intro {
+#intro {
   margin: 4px 0 16px;
   padding: 8px;
   font-size: 16px;
@@ -56,28 +52,111 @@ h1 {
     padding: 16px;
     font-size: 18px;
   }
+
+  sup {
+    vertical-align: text-top;
+
+    a:link,
+    a:visited {
+      text-decoration: none;
+    }
+  }
 }
 
-h2 {
-  font-size: 24px;
-  font-weight: 100;
+// Output area, loading state
+#app {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 1 0 100vh;
+
+  .loading-spinner {
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+
+    .loading & {
+      opacity: 1;
+    }
+  }
 }
 
-h3 {
-  font-size: 22px;
-  font-weight: 100;
+// Scripts
+// Need to specify here, as <small> is injected at runtime
+.script h3 small {
+  font-size: 1rem;
+  line-height: 19px;
 }
 
-p {
-  font-weight: 300;
+// Caveats
+#caveats {
+  width: 300px;
+  padding: 8px 16px;
+  margin-top: 32px;
+  border-top: 1px solid design-tokens.$colours-grey-300;
+
+  @media (min-width: 1024px) {
+    width: 650px;
+    padding: 16px 0;
+    margin-bottom: 0;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 100;
+  }
+
+  .back {
+    a {
+      display: flex;
+      align-items: center;
+      column-gap: 4px;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 16px;
+        height: 16px;
+        background: url(/node_modules/@material-design-icons/svg/round/arrow_upward.svg);
+        background-size: 16px;
+        opacity: 0.666;
+      }
+    }
+  }
 }
 
+// Footer
+footer {
+  width: 300px;
+  padding: 8px 16px;
+  border-top: 1px solid design-tokens.$colours-grey-300;
+  font-size: 14px;
+  color: design-tokens.$colours-grey-700;
+
+  @media (min-width: 1024px) {
+    width: 650px;
+    padding: 16px 0;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 4px;
+  }
+}
+
+// Easter eggs
 #script___inception {
   display: none;
 }
 
 .inception {
-  .script {
+  .script[id^='script'] {
     display: none;
   }
 
@@ -91,401 +170,15 @@ p {
 }
 
 .party {
-  background: url(./images/loading.svg);
-  background-size: 32px;
+  background-image: url(./images/loading.svg);
+  background-attachment: fixed;
+  background-position: center top;
+  background-size: 128px;
 
   > * {
-    background-color: rgba(#e3e3e3, 0.2);
+    background-color: rgba(design-tokens.$colours-grey-200, 0.2);
     backdrop-filter: blur(5px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 30px rgba(design-tokens.$colours-grey-900, 0.1);
     border-radius: 8px;
-  }
-}
-
-.script {
-  width: 300px;
-  padding: 16px;
-  border-radius: 8px;
-  transition: all 0.15s ease-in-out;
-  --index: 29;
-
-  &.hidden {
-    display: none;
-  }
-
-  &:hover {
-    background-color: rgba(#fff, 0.2);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  }
-
-  &:target,
-  &.target {
-    background-color: rgba(#db00ff, 0.05);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  }
-
-  .chart-wrapper {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      top: -4px;
-      left: calc((var(--index) * 10px) - 7px);
-      display: block;
-      width: 16px;
-      height: 16px;
-      background-image: url(/node_modules/@material-design-icons/svg/outlined/push_pin.svg);
-      background-size: 16px;
-      opacity: 0.3;
-      transition: top 0.15s ease-in-out, opacity 0.3s ease-in-out;
-
-      @media (min-width: 1024px) {
-        top: -8px;
-        left: calc((var(--index) * 13.366666666666667px) - 8px);
-      }
-    }
-  }
-
-  &.pinned .chart-wrapper::after {
-    top: 0;
-    opacity: 0.5;
-
-    @media (min-width: 1024px) {
-      top: -4px;
-    }
-  }
-
-  h3 {
-    flex: 1 0 100%;
-    margin: 0 0 8px;
-
-    span span {
-      font-size: 1rem;
-    }
-
-    a:link,
-    a:visited {
-      display: flex;
-      align-items: flex-end;
-      column-gap: 4px;
-      position: relative;
-      color: #111;
-      text-decoration: none;
-
-      &::after {
-        content: '';
-        display: block;
-        width: 24px;
-        height: 24px;
-        background: url(/node_modules/@material-design-icons/svg/round/link.svg);
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-      }
-    }
-
-    a:hover,
-    a:active,
-    a:focus {
-      color: #111;
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      outline: none;
-
-      &::after {
-        opacity: 0.3;
-      }
-    }
-  }
-
-  .metadata {
-    margin: 4px 0;
-
-    @media (min-width: 1024px) {
-      width: calc(100% - 400px - 16px);
-    }
-  }
-
-  p,
-  details {
-    margin: 0 0 4px;
-    font-weight: 300;
-
-    strong {
-      font-weight: 400;
-    }
-
-    summary {
-      cursor: default;
-
-      &::marker,
-      &::-webkit-details-marker {
-        display: none;
-        content: '';
-      }
-
-      &::after {
-        content: '';
-        display: block;
-        width: 18px;
-        height: 18px;
-        float: right;
-        background: url(/node_modules/@material-design-icons/svg/round/expand_more.svg);
-        background-size: 18px;
-        transition: transform 0.15s ease-in-out;
-        transform-origin: 9px;
-      }
-    }
-
-    &[open] summary {
-      margin-bottom: 8px;
-
-      &::after {
-        transform: rotate(-180deg);
-      }
-    }
-
-    .trend,
-    .subresources-trend {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      margin-bottom: -2px;
-      background-size: 16px;
-
-      &.down {
-        background-image: url(/node_modules/@material-design-icons/svg/round/trending_down.svg);
-        filter: invert(63%) sepia(47%) saturate(583%) hue-rotate(71deg)
-          brightness(98%) contrast(86%);
-      }
-      &.flat {
-        background-image: url(/node_modules/@material-design-icons/svg/round/trending_flat.svg);
-        filter: invert(54%) sepia(0%) saturate(0%) hue-rotate(196deg)
-          brightness(99%) contrast(88%);
-      }
-      &.up {
-        background-image: url(/node_modules/@material-design-icons/svg/round/trending_up.svg);
-        filter: invert(42%) sepia(36%) saturate(949%) hue-rotate(314deg)
-          brightness(96%) contrast(83%);
-      }
-    }
-
-    pre {
-      width: 100%;
-      max-width: 288px;
-      max-height: 80px;
-      overflow: auto;
-      padding: 4px;
-      margin-top: 4px;
-      background-color: #e3e3e3;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      scrollbar-width: thin;
-
-      &::-webkit-scrollbar {
-        width: 2px;
-        height: 2px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background: rgba(#666, 0.3);
-        border-radius: 2px;
-      }
-
-      &::-webkit-scrollbar-corner {
-        background: transparent;
-      }
-
-      @media (min-width: 1024px) {
-        max-width: 224px;
-      }
-    }
-
-    table {
-      width: 100%;
-      border-spacing: 0;
-
-      thead {
-        th {
-          padding-right: 8px;
-          font-size: 14px;
-          font-weight: 500;
-          text-align: left;
-
-          &:last-of-type {
-            padding-right: 0;
-          }
-        }
-      }
-
-      tbody {
-        th {
-          font-weight: normal;
-        }
-
-        td {
-          padding-right: 8px;
-          font-size: 14px;
-          max-width: 100px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-
-          &:last-of-type {
-            padding-right: 0;
-          }
-        }
-
-        pre {
-          margin: 4px 0 0;
-        }
-      }
-    }
-  }
-
-  .date-range {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0;
-    font-size: 10px;
-  }
-
-  @media (min-width: 1024px) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    width: 650px;
-
-    h3 {
-      margin-bottom: 0;
-    }
-  }
-}
-
-.chart-wrapper {
-  width: 300px;
-
-  @media (min-width: 1024px) {
-    width: 400px;
-  }
-}
-
-.chart {
-  width: 300px;
-  height: 104px;
-  margin-top: 12px;
-  border-left: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  cursor: crosshair;
-
-  @media (min-width: 1024px) {
-    width: 400px;
-    height: 139px;
-    margin-top: 8px;
-  }
-}
-
-footer {
-  padding: 8px 16px;
-  margin-top: 32px;
-  border-top: 1px solid #ccc;
-  font-size: 14px;
-  color: #666;
-
-  @media (min-width: 1024px) {
-    padding: 16px 0;
-  }
-}
-
-footer ul {
-  display: flex;
-  flex-direction: column;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-footer li {
-  margin-bottom: 4px;
-}
-
-form {
-  width: 300px;
-  padding: 0 16px;
-  margin-bottom: 16px;
-
-  @media (min-width: 1024px) {
-    display: flex;
-    justify-content: space-between;
-    column-gap: 16px;
-    align-items: center;
-    width: 650px;
-    margin-bottom: 0;
-  }
-
-  .next-update {
-    margin-bottom: 24px;
-    flex-grow: 1;
-    font-size: 14px;
-
-    @media (min-width: 1024px) {
-      margin-bottom: 6px;
-    }
-  }
-
-  .filter {
-    position: relative;
-
-    label {
-      position: absolute;
-      top: -16px;
-      left: 0;
-      font-size: 12px;
-      font-weight: 300;
-      transition: all 0.15s ease-in-out;
-    }
-
-    input {
-      width: 100%;
-      padding: 4px 4px 4px 32px;
-      background-color: rgba(#ccc, 0.5);
-      border: 1px solid #ccc;
-      border-radius: 4px;
-
-      @media (min-width: 1024px) {
-        width: 14rem;
-      }
-
-      &:focus-visible {
-        outline: none;
-        border-color: #666;
-        box-shadow: 0 0 4px 4px rgba(#0074d9, 0.3);
-      }
-
-      &:placeholder-shown + label {
-        top: 4px;
-        left: 32px;
-        font-size: 14px;
-      }
-
-      &:focus-visible + label {
-        top: -16px;
-        left: 0;
-        font-size: 12px;
-      }
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 1px;
-      left: 4px;
-      display: block;
-      width: 24px;
-      height: 24px;
-      background: url(/node_modules/@material-design-icons/svg/round/search.svg);
-      opacity: 0.2;
-    }
   }
 }

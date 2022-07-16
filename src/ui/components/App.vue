@@ -41,6 +41,8 @@ watchEffect(async () => {
       }
     });
 
+    scrollToAnchorlink();
+
     return data;
   });
 })
@@ -95,5 +97,19 @@ function filterScripts() {
     const hasMatchingUrl = script.url.toLowerCase().includes(filterKeywords.value);
     return script.name.toLowerCase().includes(filterKeywords.value) || hasMatchingUrl
   });
+}
+
+function scrollToAnchorlink() {
+  if (window.location.hash && window.location.hash.startsWith('#script_')) {
+    setTimeout(() => {
+      const $script = document.querySelector(window.location.hash);
+      if ($script !== null) {
+        $script.classList.add('target');
+        $script.scrollIntoView({
+          behavior: 'smooth',
+        });
+      }
+    }, 100);
+  }
 }
 </script>

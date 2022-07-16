@@ -90,3 +90,92 @@ function getRemaining(now: Date, then: Date): string {
 }
 
 </script>
+
+<style lang="scss" scoped>
+@use '../style/design-tokens';
+
+form {
+    width: 300px;
+    padding: 0 16px;
+    margin-bottom: 16px;
+
+    @media (min-width: 1024px) {
+        display: flex;
+        justify-content: space-between;
+        column-gap: 16px;
+        align-items: center;
+        width: 650px;
+        margin-bottom: 0;
+    }
+}
+
+.results-heading {
+    font-size: 24px;
+    font-weight: 100;
+}
+
+.next-update {
+    margin-bottom: 24px;
+    flex-grow: 1;
+    font-size: 14px;
+
+    @media (min-width: 1024px) {
+        margin-bottom: 6px;
+    }
+}
+
+.filter {
+    position: relative;
+
+    label {
+        position: absolute;
+        top: -16px;
+        left: 0;
+        font-size: 12px;
+        font-weight: 300;
+        transition: all 0.15s ease-in-out;
+    }
+
+    input {
+        width: 100%;
+        padding: 4px 4px 4px 32px;
+        background-color: rgba(design-tokens.$colours-grey-300, 0.5);
+        border: 1px solid design-tokens.$colours-grey-300;
+        border-radius: 4px;
+
+        @media (min-width: 1024px) {
+            width: 14rem;
+        }
+
+        &:focus-visible {
+            outline: none;
+            border-color: design-tokens.$colours-grey-700;
+            box-shadow: 0 0 4px 4px rgba(design-tokens.$colours-primary, 0.3);
+        }
+
+        &:placeholder-shown+label {
+            top: 4px;
+            left: 32px;
+            font-size: 14px;
+        }
+
+        &:focus-visible+label {
+            top: -16px;
+            left: 0;
+            font-size: 12px;
+        }
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 1px;
+        left: 4px;
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url(/node_modules/@material-design-icons/svg/round/search.svg);
+        opacity: 0.2;
+    }
+}
+</style>

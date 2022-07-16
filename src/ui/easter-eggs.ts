@@ -39,7 +39,7 @@ function onIntroClick() {
 }
 
 document
-  .querySelector('.intro')
+  .querySelector('#intro')
   ?.addEventListener('click', onIntroClick, { passive: true });
 
 (async () => {

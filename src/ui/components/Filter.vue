@@ -174,7 +174,7 @@ form {
         display: block;
         width: 24px;
         height: 24px;
-        background: url(/node_modules/@material-design-icons/svg/round/search.svg);
+        background: url(data-url:/node_modules/@material-design-icons/svg/round/search.svg);
         opacity: 0.2;
     }
 }

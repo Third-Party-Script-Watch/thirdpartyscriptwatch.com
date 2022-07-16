@@ -280,7 +280,7 @@ function onChartMousemove(e) {
             display: block;
             width: 16px;
             height: 16px;
-            background-image: url(/node_modules/@material-design-icons/svg/outlined/push_pin.svg);
+            background-image: url(data-url:/node_modules/@material-design-icons/svg/outlined/push_pin.svg);
             background-size: 16px;
             opacity: 0.3;
             transition: top 0.15s ease-in-out, opacity 0.3s ease-in-out;
@@ -322,7 +322,7 @@ function onChartMousemove(e) {
                 display: block;
                 width: 24px;
                 height: 24px;
-                background: url(/node_modules/@material-design-icons/svg/round/link.svg);
+                background: url(data-url:/node_modules/@material-design-icons/svg/round/link.svg);
                 opacity: 0;
                 transition: opacity 0.3s ease-in-out;
             }
@@ -374,7 +374,7 @@ function onChartMousemove(e) {
                 width: 18px;
                 height: 18px;
                 float: right;
-                background: url(/node_modules/@material-design-icons/svg/round/expand_more.svg);
+                background: url(data-url:/node_modules/@material-design-icons/svg/round/expand_more.svg);
                 background-size: 18px;
                 transition: transform 0.15s ease-in-out;
                 transform-origin: 9px;
@@ -399,17 +399,17 @@ function onChartMousemove(e) {
             background-size: 16px;
 
             &.down {
-                background-image: url(/node_modules/@material-design-icons/svg/round/trending_down.svg);
+                background-image: url(data-url:/node_modules/@material-design-icons/svg/round/trending_down.svg);
                 filter: invert(63%) sepia(47%) saturate(583%) hue-rotate(71deg) brightness(98%) contrast(86%);
             }
 
             &.flat {
-                background-image: url(/node_modules/@material-design-icons/svg/round/trending_flat.svg);
+                background-image: url(data-url:/node_modules/@material-design-icons/svg/round/trending_flat.svg);
                 filter: invert(54%) sepia(0%) saturate(0%) hue-rotate(196deg) brightness(99%) contrast(88%);
             }
 
             &.up {
-                background-image: url(/node_modules/@material-design-icons/svg/round/trending_up.svg);
+                background-image: url(data-url:/node_modules/@material-design-icons/svg/round/trending_up.svg);
                 filter: invert(42%) sepia(36%) saturate(949%) hue-rotate(314deg) brightness(96%) contrast(83%);
             }
         }

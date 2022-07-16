@@ -400,6 +400,7 @@ function onChartMousemove(e) {
             width: 16px;
             height: 16px;
             margin-bottom: -2px;
+            margin-left: 4px;
             background-size: 16px;
 
             &.down {

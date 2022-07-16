@@ -5,6 +5,13 @@
   "engines": {
     "node": ">=16.0.0"
   },
+  "targets": {
+    "modern": {
+      "engines": {
+        "browsers": ">= 50%"
+      }
+    }
+  },
   "scripts": {
     "build:ui": "npm run build -w ui",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,7 +32,10 @@
     "src/watcher"
   ],
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.6.2"
+    "@parcel/optimizer-data-url": "^2.6.2",
+    "@parcel/transformer-inline-string": "^2.6.2",
+    "@parcel/transformer-sass": "^2.6.2",
+    "@parcel/transformer-vue": "^2.6.2"
   },
   "staticFiles": {
     "staticPath": "./static/"

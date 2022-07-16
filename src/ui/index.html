@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <title>Third Party Script Watch</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preconnect"
+      href="https://data.thirdpartyscriptwatch.com/data/metrics-30.json"
+    />
     <link rel="stylesheet" href="./main.scss" />
     <link rel="icon" type="image/svg+xml" href="./images/favicon.svg" />
     <link rel="icon" type="image/png" href="./images/favicon.png" />
@@ -23,18 +27,9 @@
       scripts over time
     </p>
 
-    <form>
-      <h2 class="results-heading">Last 30 days results</h2>
-      <p class="next-update"></p>
-      <div class="filter">
-        <input name="q" id="q" type="search" placeholder=" " />
-        <label for="q">Filter by name or URL</label>
-      </div>
-    </form>
-
-    <main id="output">
+    <main id="app">
       <img
-        src="images/loading.svg"
+        src="./images/loading.svg"
         class="loading-spinner"
         width="32"
         alt="Loading..."
@@ -45,7 +40,7 @@
       <h2>Caveats</h2>
       <p>
         Size may not reflect exactly what you see in your browser's developer
-        tools - it's calculated from the repsonse content-length plus an
+        tools - it's calculated from the response content-length plus an
         approximation of the header size.
       </p>
       <p>
@@ -78,6 +73,7 @@
       </ul>
     </footer>
 
-    <script src="./main.ts" type="module"></script>
+    <script src="./index.ts" type="module"></script>
+    <script src="./easter-eggs.ts" type="module"></script>
   </body>
 </html>

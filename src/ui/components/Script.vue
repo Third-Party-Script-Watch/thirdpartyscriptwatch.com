@@ -57,7 +57,8 @@
             </details>
         </div>
         <div class="chart-wrapper">
-            <svg viewBox="0 0 300 104" class="chart" @click="onChartClick" @mousemove="onChartMousemove" @touchmove="onChartMousemove">
+            <svg viewBox="0 0 300 104" class="chart" @click.passive="onChartClick" @mousemove.passive="onChartMousemove"
+                @touchmove.passive="onChartMousemove">
                 <polyline class="chart-line" fill="none" stroke="#0074d9" stroke-width="1" :points="state.pointsCache.join('\n')" />
                 <line :x1="metricIndex * 10" y1="1" :x2="metricIndex * 10" y2="104" stroke="#CCCCCC" class="chart-indicator-line" />
                 <circle :cx="metricIndex * 10" :cy="state.pointsCache[metricIndex] ? state.pointsCache[metricIndex].split(', ')[1] : 0"

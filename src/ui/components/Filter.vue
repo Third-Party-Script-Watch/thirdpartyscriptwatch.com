@@ -3,7 +3,7 @@
         <h2 class="results-heading">Last 30 days results</h2>
         <p class="next-update" :title="nextUpdateTitle">{{ nextUpdateText }}</p>
         <div class="filter">
-            <input name="q" id="q" type="search" placeholder=" " v-model="keywords" @input="onKeywordsChange" />
+            <input name="q" id="q" type="search" placeholder=" " v-model="keywords" @input.passive="onKeywordsChange" />
             <label for="q">Filter by name or URL</label>
         </div>
     </form>

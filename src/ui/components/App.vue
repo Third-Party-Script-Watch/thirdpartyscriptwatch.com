@@ -1,15 +1,22 @@
 <template>
-  <img src="./images/loading.svg" class="loading-spinner" width="32" alt="Loading..." v-if="state.scripts.length === 0" />
-  <Script v-else v-for="script in state.scripts" :key="script.id" :script="script"></Script>
+  <Filter @filter-change="onFilterChange"></Filter>
+  <img src="../images/loading.svg" class="loading-spinner" width="32" alt="Loading..." v-if="state.scripts.length === 0" />
+  <Script v-else v-for="script in filteredScripts" :key="script.id" :script="script"></Script>
 </template>
 
 <script setup lang="ts">
-import { reactive, watchEffect } from 'vue';
+import { reactive, computed, ref, watchEffect } from 'vue';
+
+import Filter from './Filter.vue'
 import Script from './Script.vue'
 
 const state = reactive<{ scripts: any[] }>({
   scripts: []
 });
+
+const filteredScripts = computed(filterScripts);
+
+const filterKeywords = ref('');
 
 setTimeout(() => {
   document.body.classList.add('loading');
@@ -73,5 +80,20 @@ function fillEmpty(data) {
 
     return data.reverse();
   }
+}
+
+function onFilterChange(keywords: string) {
+  filterKeywords.value = keywords;
+}
+
+function filterScripts() {
+  if (filterKeywords.value === '') {
+    return state.scripts;
+  }
+
+  return state.scripts.filter(script => {
+    const hasMatchingUrl = script.url.toLowerCase().includes(filterKeywords.value);
+    return script.name.toLowerCase().includes(filterKeywords.value) || hasMatchingUrl
+  });
 }
 </script>

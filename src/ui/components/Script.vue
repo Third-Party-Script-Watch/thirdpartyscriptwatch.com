@@ -2,7 +2,7 @@
     <div class="script" :id="'script_' + props.script?.id" :class="{ pinned: state.isPinned }" :style="{ '--index': metricIndex }">
         <h3><a :href="'#script_' + props.script?.id" v-html="getScriptName(props.script?.name)"></a></h3>
         <div class="metadata">
-            <p><strong>Date:</strong> <span class="retrieved">{{ formatDate(metric.retrieved) }}</span></p>
+            <p><strong>Date:</strong> <span class="retrieved">{{ formatDate(metric.retrieved) }} (UTC)</span></p>
             <p v-if="metric.contentLength === -1">
                 <strong>Initial script: </strong>No data
             </p>
@@ -307,11 +307,6 @@ function onChartMousemove(e) {
         font-size: 22px;
         font-weight: 100;
         line-height: 24px;
-
-        small {
-            font-size: 1rem;
-            line-height: 19px;
-        }
 
         a:link,
         a:visited {

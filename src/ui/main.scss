@@ -80,6 +80,13 @@ h1 {
   }
 }
 
+// Scripts
+// Need to specify here, as <small> is injected at runtime
+.script h3 small {
+  font-size: 1rem;
+  line-height: 19px;
+}
+
 // Caveats
 #caveats {
   width: 300px;

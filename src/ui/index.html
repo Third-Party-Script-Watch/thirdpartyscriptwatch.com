@@ -18,7 +18,10 @@
       <h1>Third Party Script Watch</h1>
     </header>
 
-    <p class="intro">Tracking the size of third-party scripts over time</p>
+    <p id="intro">
+      Tracking the size<sup><a href="#caveats">&#42;</a></sup> of third-party
+      scripts over time
+    </p>
 
     <main id="app">
       <img
@@ -28,6 +31,20 @@
         alt="Loading..."
       />
     </main>
+
+    <aside id="caveats">
+      <h2>Caveats</h2>
+      <p>
+        Size may not reflect exactly what you see in your browser's developer
+        tools - it's calculated from the response content-length plus an
+        approximation of the header size.
+      </p>
+      <p>
+        Additional factors such as cookies, location or language detection may
+        also impact the size.
+      </p>
+      <p class="back"><a href="#intro">Back to intro</a></p>
+    </aside>
 
     <footer>
       <ul>

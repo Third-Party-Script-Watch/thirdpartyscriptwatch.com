@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import App from './components/App.vue';
+import { EasterEggs } from './services/easter-eggs';
 
 if (process.env.NODE_ENV === 'development') {
   globalThis.__VUE_OPTIONS_API__ = true;
@@ -11,3 +12,5 @@ if (process.env.NODE_ENV === 'development') {
 
 const app = createApp(App);
 app.mount('#app');
+
+new EasterEggs();

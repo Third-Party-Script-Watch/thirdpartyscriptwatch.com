@@ -287,7 +287,7 @@ function filterDataUris(subresources) {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         width: 650px;
 
         h3 {
@@ -385,7 +385,7 @@ h3 {
 }
 
 .metadata {
-    margin: 4px 0;
+    margin: 8px 0 0;
 
     @media (min-width: 1024px) {
         width: calc(100% - 400px - 16px);

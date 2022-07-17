@@ -52,9 +52,7 @@
                         <tr>
                             <th>Size</th>
                             <th><abbr title="Encoding">Enc.</abbr></th>
-                            <th>
-                                Type
-                            </th>
+                            <th>Type</th>
                         </tr>
                     </thead>
                     <tbody v-for="subresource in filterDataUris(metric.subresources)">

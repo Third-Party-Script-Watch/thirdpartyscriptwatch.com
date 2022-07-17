@@ -37,7 +37,7 @@
             <details class="subresources"
                 v-if="metric.contentLength >= 0 && metric.subresources !== undefined && metric.subresources.length > 0">
                 <summary>
-                    <strong class="subresources-label">{{ metric.subresources.length }} subresources: </strong>
+                    <strong class="subresources-label">{{ filterDataUris(metric.subresources).length }} subresources: </strong>
                     <span class="subresources-size">{{ formatSize(getSubresourcesSize(metric.subresources)) }} </span>
                     <span class="subresources-trend"
                         :class="getTrendClass(getSubresourcesSize(metric.subresources), getSubresourcesSize(getPreviousMetric(metric.retrieved).subresources))"

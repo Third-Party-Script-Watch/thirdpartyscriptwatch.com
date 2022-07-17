@@ -13,6 +13,18 @@
                     <span class="trend" :class="getTrendClass(metric.contentLength, getPreviousMetric(metric.retrieved).contentLength)"
                         :title="getTrendTitle(metric.contentLength, getPreviousMetric(metric.retrieved).contentLength)"></span>
                 </summary>
+                <p>
+                    <strong>Uncompressed:</strong>
+                    {{ formatSize(metric.contentLengthUncompressed) }}
+                </p>
+                <p>
+                    <strong>Encoding:</strong>
+                    {{ metric.contentEncoding ? metric.contentEncoding : '-' }}
+                </p>
+                <p>
+                    <strong>Type:</strong>
+                    {{ metric.contentType ? metric.contentType.split(';')[0] : '-' }}
+                </p>
                 <strong>URL:</strong>
                 <pre class="url">{{ props.script?.url }}</pre>
                 <strong v-if="props.script?.initialisationHtml">Initialisation HTML:</strong>
@@ -25,21 +37,27 @@
             <details class="subresources"
                 v-if="metric.contentLength >= 0 && metric.subresources !== undefined && metric.subresources.length > 0">
                 <summary>
-                    <strong class="subresources-label">{{ metric.subresources.length }} subresources: </strong>
+                    <strong class="subresources-label">{{ filterDataUris(metric.subresources).length }} subresources: </strong>
                     <span class="subresources-size">{{ formatSize(getSubresourcesSize(metric.subresources)) }} </span>
                     <span class="subresources-trend"
                         :class="getTrendClass(getSubresourcesSize(metric.subresources), getSubresourcesSize(getPreviousMetric(metric.retrieved).subresources))"
                         :title="getTrendTitle(getSubresourcesSize(metric.subresources), getSubresourcesSize(getPreviousMetric(metric.retrieved).subresources))"></span>
                 </summary>
+
+                <label v-if="state.hasDataUris" class="show-data-uris"><input type="checkbox" v-model="state.showDataUris" /> Show data
+                    URIs</label>
+
                 <table>
                     <thead>
                         <tr>
                             <th>Size</th>
                             <th><abbr title="Encoding">Enc.</abbr></th>
-                            <th>Type</th>
+                            <th>
+                                Type
+                            </th>
                         </tr>
                     </thead>
-                    <tbody v-for="subresource in metric.subresources">
+                    <tbody v-for="subresource in filterDataUris(metric.subresources)">
                         <tr>
                             <th colspan="3">
                                 <pre class="url">{{ subresource.url }}</pre>
@@ -79,8 +97,10 @@ const props = defineProps({
     script: Object
 })
 
-const state = reactive<{ isPinned: boolean, pointsCache: string[] }>({
+const state = reactive<{ isPinned: boolean, hasDataUris: boolean, showDataUris: boolean, pointsCache: string[] }>({
     isPinned: false,
+    hasDataUris: false,
+    showDataUris: false,
     pointsCache: []
 });
 
@@ -121,6 +141,7 @@ function generatePoints(data) {
         pointsArray.push(
             `${i * 10}, ${102 - getPointHeight(contentLength, range)}`
         );
+        state.hasDataUris = state.hasDataUris || (x.subresources && x.subresources.some(x => x.url.startsWith('data:')));
     });
 
     state.pointsCache = pointsArray;
@@ -229,18 +250,25 @@ function onChartClick() {
 }
 
 function onChartMousemove(e) {
-
     if (!state.isPinned) {
         const br = e.target.getBoundingClientRect();
         const indexMultiplier = br.width / 30;
         const x = e.touches ? e.touches[0].clientX - br.left : e.offsetX;
         const index = Math.round(x / indexMultiplier);
 
-        if (index < props.script?.metrics.length) {
+        if (index >= 0 && index < props.script?.metrics.length) {
             metric.value = props.script?.metrics.at(index);
             metricIndex.value = index;
         }
     }
+}
+
+function filterDataUris(subresources) {
+    if (state.showDataUris) {
+        return subresources;
+    }
+
+    return subresources.filter(x => !x.url.startsWith('data:'))
 }
 
 </script>
@@ -259,7 +287,7 @@ function onChartMousemove(e) {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         width: 650px;
 
         h3 {
@@ -357,7 +385,7 @@ h3 {
 }
 
 .metadata {
-    margin: 4px 0;
+    margin: 8px 0 0;
 
     @media (min-width: 1024px) {
         width: calc(100% - 400px - 16px);
@@ -431,7 +459,7 @@ details {
     pre {
         width: 100%;
         max-width: 288px;
-        max-height: 80px;
+        max-height: calc(3rem - 2px);
         overflow: auto;
         padding: 4px;
         margin-top: 4px;
@@ -456,6 +484,18 @@ details {
 
         @media (min-width: 1024px) {
             max-width: 224px;
+        }
+    }
+
+    .show-data-uris {
+        display: flex;
+        align-items: center;
+        column-gap: 4px;
+        margin: 0 0 4px;
+        font-size: 14px;
+
+        input {
+            margin: 0;
         }
     }
 

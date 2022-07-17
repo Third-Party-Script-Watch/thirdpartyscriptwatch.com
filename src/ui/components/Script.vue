@@ -43,15 +43,21 @@
                         :class="getTrendClass(getSubresourcesSize(metric.subresources), getSubresourcesSize(getPreviousMetric(metric.retrieved).subresources))"
                         :title="getTrendTitle(getSubresourcesSize(metric.subresources), getSubresourcesSize(getPreviousMetric(metric.retrieved).subresources))"></span>
                 </summary>
+
+                <label v-if="state.hasDataUris" class="show-data-uris"><input type="checkbox" v-model="state.showDataUris" /> Show data
+                    URIs</label>
+
                 <table>
                     <thead>
                         <tr>
                             <th>Size</th>
                             <th><abbr title="Encoding">Enc.</abbr></th>
-                            <th>Type</th>
+                            <th>
+                                Type
+                            </th>
                         </tr>
                     </thead>
-                    <tbody v-for="subresource in metric.subresources">
+                    <tbody v-for="subresource in filterDataUris(metric.subresources)">
                         <tr>
                             <th colspan="3">
                                 <pre class="url">{{ subresource.url }}</pre>
@@ -91,8 +97,10 @@ const props = defineProps({
     script: Object
 })
 
-const state = reactive<{ isPinned: boolean, pointsCache: string[] }>({
+const state = reactive<{ isPinned: boolean, hasDataUris: boolean, showDataUris: boolean, pointsCache: string[] }>({
     isPinned: false,
+    hasDataUris: false,
+    showDataUris: false,
     pointsCache: []
 });
 
@@ -133,6 +141,7 @@ function generatePoints(data) {
         pointsArray.push(
             `${i * 10}, ${102 - getPointHeight(contentLength, range)}`
         );
+        state.hasDataUris = state.hasDataUris || (x.subresources && x.subresources.some(x => x.url.startsWith('data:')));
     });
 
     state.pointsCache = pointsArray;
@@ -252,6 +261,14 @@ function onChartMousemove(e) {
             metricIndex.value = index;
         }
     }
+}
+
+function filterDataUris(subresources) {
+    if (state.showDataUris) {
+        return subresources;
+    }
+
+    return subresources.filter(x => !x.url.startsWith('data:'))
 }
 
 </script>
@@ -467,6 +484,18 @@ details {
 
         @media (min-width: 1024px) {
             max-width: 224px;
+        }
+    }
+
+    .show-data-uris {
+        display: flex;
+        align-items: center;
+        column-gap: 4px;
+        margin: 0 0 4px;
+        font-size: 14px;
+
+        input {
+            margin: 0;
         }
     }
 

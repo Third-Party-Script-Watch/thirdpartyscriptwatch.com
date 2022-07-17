@@ -241,14 +241,13 @@ function onChartClick() {
 }
 
 function onChartMousemove(e) {
-
     if (!state.isPinned) {
         const br = e.target.getBoundingClientRect();
         const indexMultiplier = br.width / 30;
         const x = e.touches ? e.touches[0].clientX - br.left : e.offsetX;
         const index = Math.round(x / indexMultiplier);
 
-        if (index < props.script?.metrics.length) {
+        if (index >= 0 && index < props.script?.metrics.length) {
             metric.value = props.script?.metrics.at(index);
             metricIndex.value = index;
         }

@@ -13,6 +13,18 @@
                     <span class="trend" :class="getTrendClass(metric.contentLength, getPreviousMetric(metric.retrieved).contentLength)"
                         :title="getTrendTitle(metric.contentLength, getPreviousMetric(metric.retrieved).contentLength)"></span>
                 </summary>
+                <p>
+                    <strong>Uncompressed:</strong>
+                    {{ formatSize(metric.contentLengthUncompressed) }}
+                </p>
+                <p>
+                    <strong>Encoding:</strong>
+                    {{ metric.contentEncoding ? metric.contentEncoding : '-' }}
+                </p>
+                <p>
+                    <strong>Type:</strong>
+                    {{ metric.contentType ? metric.contentType.split(';')[0] : '-' }}
+                </p>
                 <strong>URL:</strong>
                 <pre class="url">{{ props.script?.url }}</pre>
                 <strong v-if="props.script?.initialisationHtml">Initialisation HTML:</strong>
@@ -431,7 +443,7 @@ details {
     pre {
         width: 100%;
         max-width: 288px;
-        max-height: 80px;
+        max-height: calc(3rem - 2px);
         overflow: auto;
         padding: 4px;
         margin-top: 4px;

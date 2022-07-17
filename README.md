@@ -30,10 +30,11 @@ A static JSON file is then written out to Azure Blob Storage, containing the scr
 
 ### The UI
 
-The UI is a fairly basic pile of JavaScript that generates interactive SVG charts from the metrics; and allows filtering, deep-linking & display of details on the scripts & metrics.
+The UI is a Vue.js application that generates interactive SVG charts from the metrics; and allows filtering, deep-linking & display of details on the scripts & metrics.
 
 **Built using:**
 
+* Vue.js
 * TypeScript
 * Sass
 * Parcel

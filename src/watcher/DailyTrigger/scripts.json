@@ -34,5 +34,17 @@
     "name": "YouTube Embed",
     "url": "https://www.youtube.com/embed/H0XScE08hy8",
     "initialisationHtml": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/H0XScE08hy8\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
+  },
+  {
+    "id": "application-insights",
+    "name": "Application Insights",
+    "url": "https://js.monitor.azure.com/scripts/b/ai.2.min.js",
+    "initialisationHtml": "<script src=\"https://js.monitor.azure.com/scripts/b/ai.2.min.js\"></script>"
+  },
+  {
+    "id": "plausible-analytics",
+    "name": "Plausible Analytics",
+    "url": "https://plausible.io/js/plausible.js",
+    "initialisationHtml": "<script defer src=\"https://plausible.io/js/plausible.js\"></script>"
   }
 ]

@@ -11,6 +11,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { PlausibleEvents } from '../globals.d';
 
 const emit = defineEmits(['filterChange'])
 
@@ -39,6 +40,7 @@ onMounted(() => {
     setNextUpdate();
 })
 
+// TODO: Debounce
 function onKeywordsChange() {
     const keywordsParam = keywords.value.toLowerCase().trim();
     emit('filterChange', keywordsParam);
@@ -47,6 +49,12 @@ function onKeywordsChange() {
         document.title,
         keywords.value === '' ? window.location.pathname : `?q=${keywordsParam}`
     );
+
+    if (keywordsParam !== '' && keywordsParam.length > 3) {
+        plausible(PlausibleEvents.FILTER, {
+            props: { keywords: keywordsParam },
+        });
+    }
 }
 
 

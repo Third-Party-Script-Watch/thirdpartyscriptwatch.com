@@ -1,3 +1,4 @@
+import { PlausibleEvents } from '../globals.d';
 import { KeyTrigger } from './key-trigger';
 
 export class EasterEggs {
@@ -19,6 +20,11 @@ export class EasterEggs {
 
     KeyTrigger.listenFor('528491').then(() => {
       document.body.classList.toggle('inception');
+      if (document.body.classList.contains('inception')) {
+        plausible(PlausibleEvents.EASTER_EGG, {
+          props: { name: 'Inception mode', triggeredBy: 'keyboard' },
+        });
+      }
     });
   }
 
@@ -29,6 +35,11 @@ export class EasterEggs {
 
     KeyTrigger.listenFor('party').then(() => {
       document.body.classList.toggle('party');
+      if (document.body.classList.contains('party')) {
+        plausible(PlausibleEvents.EASTER_EGG, {
+          props: { name: 'Party mode', triggeredBy: 'keyboard' },
+        });
+      }
     });
   }
 
@@ -43,6 +54,11 @@ export class EasterEggs {
 
     if (this.headerClickCount === 5) {
       document.body.classList.toggle('inception');
+      if (document.body.classList.contains('inception')) {
+        plausible(PlausibleEvents.EASTER_EGG, {
+          props: { name: 'Inception mode', triggeredBy: 'click' },
+        });
+      }
     }
   }
 
@@ -57,6 +73,11 @@ export class EasterEggs {
 
     if (this.introClickCount === 3) {
       document.body.classList.toggle('party');
+      if (document.body.classList.contains('party')) {
+        plausible(PlausibleEvents.EASTER_EGG, {
+          props: { name: 'Party mode', triggeredBy: 'click' },
+        });
+      }
     }
   }
 }

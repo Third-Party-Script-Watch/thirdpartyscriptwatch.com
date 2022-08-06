@@ -73,7 +73,7 @@
             </details>
         </div>
         <div class="chart-wrapper">
-            <svg viewBox="0 0 300 104" class="chart" @click.passive="onChartClick" @mousemove.passive="onChartMousemove"
+            <svg viewBox="0 0 300 104" class="chart" @click.passive="onChartClick(props.script?.id)" @mousemove.passive="onChartMousemove"
                 @touchmove.passive="onChartMousemove">
                 <polyline class="chart-line" fill="none" stroke="#0074d9" stroke-width="1" :points="state.pointsCache.join('\n')" />
                 <line :x1="metricIndex * 10" y1="1" :x2="metricIndex * 10" y2="104" stroke="#CCCCCC" class="chart-indicator-line" />
@@ -90,6 +90,7 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue';
+import { PlausibleEvents } from '../globals.d';
 
 const props = defineProps({
     script: Object
@@ -243,8 +244,12 @@ function getTrendTitle(
     return title;
 }
 
-function onChartClick() {
-    state.isPinned = !state.isPinned
+function onChartClick(id: string) {
+    state.isPinned = !state.isPinned;
+
+    plausible(PlausibleEvents.PIN, {
+        props: { script: id, state: state.isPinned },
+    });
 }
 
 function onChartMousemove(e) {
